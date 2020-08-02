@@ -11,6 +11,7 @@ onready var tween : Tween = get_node("Tween")
 
 var smoke_particle := preload("res://src/scenes/particles/HitParticles.tscn")
 var mouse_pos := Vector2.ZERO
+var particle_holder:Node = null
 
 ## Public
 ## Animation
@@ -46,19 +47,36 @@ func handle_movement(delta : float) -> void:
 	move_and_slide(velocity * speed, FLOOR_NORMAL)
 	_handle_legs()
 
-
+export(float) var cooldown_frames = 2
+onready var cur_cooldown_frames = cooldown_frames
 func handle_weapon()-> void:
-	if Input.is_action_just_pressed("fire") && hit_scan.is_colliding():
-		if hit_scan.get_collider().has_method("take_damage"):
-			hit_scan.get_collider().take_damage(5)
-
-		var effect = smoke_particle.instance()
-		effect.position = hit_scan.get_collision_point()
-		effect.rotation = rotation
-		effect.emitting = true
-		get_tree().get_root().get_node("/root/PlayerPlayground/Particles").add_child(effect)
-
-		emit_signal("hit_point", hit_scan.get_collision_point())
+	if Input.is_action_pressed("fire"):
+		if cur_cooldown_frames > 0:
+			cur_cooldown_frames = cur_cooldown_frames - 1
+		else:
+			cur_cooldown_frames = cooldown_frames
+			var pos = get_global_mouse_position()
+			if hit_scan.is_colliding():
+				if hit_scan.get_collider().has_method("take_damage"):
+					hit_scan.get_collider().take_damage(5)
+					emit_signal("hit_point", hit_scan.get_collision_point())
+				pos = hit_scan.get_collision_point()
+	
+			var effect = smoke_particle.instance()
+			effect.position = pos
+			effect.rotation = rotation
+			effect.emitting = true
+			if particle_holder == null:
+				particle_holder = get_tree().get_root().find_node("Particles", true, false)
+			particle_holder.add_child(effect)
+			
+			flash = true
+			flash_frames = 2
+			var length = ((pos - position).y)
+			$Body/HitScan.points[0] = Vector2(0, 0)
+			$Body/HitScan.points[1] = Vector2(0, length)
+	else:
+		cur_cooldown_frames = cooldown_frames
 
 ## Private
 func _handle_legs() -> void:
@@ -82,10 +100,23 @@ func _handle_legs() -> void:
 func _ready() -> void:
 	play_idle()
 
-
+var flash = false
+var flash_frames = 0
 func _process(delta: float) -> void:
 	## Rotate the torso inline with the mouse position
 	mouse_pos = get_local_mouse_position()
 	# Interpret the value in degrees, so we can work with them easier.
 	var torso_value = fmod(rad2deg(rotation + (mouse_pos.angle() * smoothing)), 360)
 	rotation_degrees = torso_value
+
+	if flash == true:
+		if flash_frames == 0:
+			flash = false
+			$Body/Torso.frame = 0
+			$Body/muzzle_flash.visible = false
+			$Body/HitScan.visible = false
+		else:
+			flash_frames = flash_frames - 1
+			$Body/Torso.frame = 1
+			$Body/muzzle_flash.visible = true
+			$Body/HitScan.visible = true
