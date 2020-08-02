@@ -11,7 +11,6 @@ func _ready() -> void:
 func _state_logic(delta : float) -> void:
 	if [states.idle, states.run, states.reload].has(state):
 		parent.handle_movement(delta)
-		parent.handle_legs()
 		parent.handle_weapon()
 	else:
 		pass
@@ -60,4 +59,6 @@ func _exit_state(old_sate, new_state) -> void:
 
 ## Godot functions
 func _input(event: InputEvent) -> void:
-	pass
+	if [states.idle, states.run].has(state):
+		if event.is_action_pressed("eject"):
+			parent.eject()
