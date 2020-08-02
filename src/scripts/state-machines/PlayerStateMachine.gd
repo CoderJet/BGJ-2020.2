@@ -11,6 +11,7 @@ func _ready() -> void:
 func _state_logic(delta : float) -> void:
 	if [states.idle, states.run, states.reload].has(state):
 		parent.handle_movement(delta)
+		parent.handle_legs()
 		parent.handle_weapon()
 	else:
 		pass

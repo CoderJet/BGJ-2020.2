@@ -41,26 +41,14 @@ func handle_movement(delta : float) -> void:
 
 	move_and_slide(velocity * speed, FLOOR_NORMAL)
 
-#	if Input.is_action_pressed("forward"):
-#		velocity = (get_global_mouse_position() - position).normalized()
-#	elif Input.is_action_pressed("backwards"):
-#		velocity = -(get_global_mouse_position() - position).normalized()
-#
-#	if Input.is_action_pressed("left"):
-#		pass
-#	elif Input.is_action_pressed("right"):
-#		pass
-#
-#	print ((get_global_mouse_position() - position).normalized())
-#
-#	move_and_slide(velocity.normalized() * speed)
-#	velocity = Vector2.ZERO
-#	velocity.x = -int(Input.is_action_pressed("left")) + int(Input.is_action_pressed("right"))
-#	velocity.y = -int(Input.is_action_pressed("forward")) + int(Input.is_action_pressed("backwards"))
-#
-#	velocity *= speed
-#
-#	move_and_slide(velocity, FLOOR_NORMAL)
+
+func handle_legs() -> void:
+	if Input.is_action_pressed("left"):
+		legs.rotation_degrees = -45
+	elif Input.is_action_pressed("right"):
+		legs.rotation_degrees = 45
+	else:
+		legs.rotation_degrees = 0
 
 
 func handle_weapon()-> void:
