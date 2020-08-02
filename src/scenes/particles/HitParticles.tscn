@@ -8,7 +8,6 @@ modulate = Color( 0.984314, 0.00392157, 0.00392157, 1 )
 scale = Vector2( 0.25, 0.25 )
 z_index = 10
 amount = 13
-visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 1
 process_material = ExtResource( 2 )
