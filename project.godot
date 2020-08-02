@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Entity",
 "class": "Player",
 "language": "GDScript",
-"path": "res://src/scripts/entities/Player.gd"
+"path": "res://assets/textures/player/Player.gd"
 }, {
 "base": "Node",
 "class": "StateMachine",
@@ -91,4 +91,3 @@ reload={
 [rendering]
 
 quality/2d/use_nvidia_rect_flicker_workaround=true
-quality/2d/use_pixel_snap=true

@@ -24,7 +24,7 @@ func _ready():
 	var used_rect = get_node("../Floor").get_used_rect()
 	map_size = Vector2(used_rect.size)
 	var walkable_cells_list = astar_add_walkable_cells(obstacles)
-	astar_connect_walkable_cells(walkable_cells_list)
+	astar_connect_walkable_cells_diagonal(walkable_cells_list)
 
 
 # Click and Shift force the start and end position of the path to update

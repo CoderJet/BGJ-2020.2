@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/impact.png-d84e2dab761b191d4816942a5e02afc8.stex"
+path="res://.import/Walls_Box.png-eda11f664cff9bcfe8e3dfa2393f36c1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/impact.png"
-dest_files=[ "res://.import/impact.png-d84e2dab761b191d4816942a5e02afc8.stex" ]
+source_file="res://assets/objects/Walls_Box.png"
+dest_files=[ "res://.import/Walls_Box.png-eda11f664cff9bcfe8e3dfa2393f36c1.stex" ]
 
 [params]
 

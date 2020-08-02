@@ -10,8 +10,8 @@ func _ready() -> void:
 ## State machine logic
 func _state_logic(delta : float) -> void:
 	if [states.idle, states.run, states.reload].has(state):
-		parent._handle_movement(delta)
-		parent._handle_weapon()
+		parent.handle_movement(delta)
+		parent.handle_weapon()
 	else:
 		pass
 
@@ -23,21 +23,22 @@ func _get_transition(delta : float):
 			if parent.velocity != Vector2.ZERO:
 				return states.run
 		states.run:
-			pass
+			if parent.velocity == Vector2.ZERO:
+				return states.idle
 		states.reload:
 			pass
 		states.die:
 			pass
-	return states.idle
+	return null
 
 
 func _enter_state(new_state, old_state) -> void:
 	# Handle animations
 	match state:
 		states.idle:
-			pass
+			parent.play_idle()
 		states.run:
-			pass
+			parent.play_running()
 		states.reload:
 			pass
 		states.die:
