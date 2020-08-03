@@ -63,7 +63,7 @@ func handle_weapon()-> void:
 ## Private
 func _handle_legs() -> void:
 	if !tween.is_active():
-		var rotate_amount
+		var rotate_amount = 0
 
 		if Input.is_action_pressed("left"):
 			rotate_amount = -45
