@@ -8,6 +8,7 @@ export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
 onready var hit_scan := get_node("Body/RayCast2D")
 onready var legs : AnimatedSprite = get_node("Legs")
 onready var tween : Tween = get_node("Tween")
+export(float) var weapon_range = 2000
 
 var smoke_particle := preload("res://src/scenes/particles/HitParticles.tscn")
 var mouse_pos := Vector2.ZERO
@@ -29,6 +30,8 @@ func eject() -> void:
 	if get_node("VCR").get_children().size() == 1:
 		pass
 
+func is_player() -> bool:
+	return true
 
 func handle_movement(delta : float) -> void:
 	velocity = Vector2.ZERO
@@ -51,11 +54,16 @@ export(float) var cooldown_frames = 2
 onready var cur_cooldown_frames = cooldown_frames
 func handle_weapon()-> void:
 	if Input.is_action_pressed("fire"):
+		var diff_x = rand_range(-100, 100)
+		var diff_y = rand_range(-50, 50)
+		
 		if cur_cooldown_frames > 0:
 			cur_cooldown_frames = cur_cooldown_frames - 1
 		else:
 			cur_cooldown_frames = cooldown_frames
-			var pos = get_global_mouse_position()
+			#var pos = get_global_mouse_position()
+			var pos = Vector2(0 + diff_x, weapon_range + diff_y)
+			hit_scan.cast_to = Vector2(weapon_range + diff_y, diff_x)
 			if hit_scan.is_colliding():
 				if hit_scan.get_collider().has_method("take_damage"):
 					hit_scan.get_collider().take_damage(5)
@@ -68,13 +76,24 @@ func handle_weapon()-> void:
 			effect.emitting = true
 			if particle_holder == null:
 				particle_holder = get_tree().get_root().find_node("Particles", true, false)
+#				if particle_holder == null:
+#					# Add it.
+#					var node = Node2D
+#					node.set_name("Particles")
+#					get_tree().get_root().add_child(node)
+#					particle_holder = node
 			particle_holder.add_child(effect)
 
+			
+			
 			flash = true
 			flash_frames = 2
-			var length = ((pos - position).y)
+			#var length = pos.distance_to(position) - 330
 			$Body/HitScan.points[0] = Vector2(0, 0)
-			$Body/HitScan.points[1] = Vector2(0, length)
+			if hit_scan.is_colliding():
+				$Body/HitScan.points[1] = Vector2(diff_x, pos.distance_to(position) - 330)
+			else:
+				$Body/HitScan.points[1] = Vector2(0 + diff_x, weapon_range + diff_y)
 	else:
 		cur_cooldown_frames = cooldown_frames
 
@@ -91,10 +110,10 @@ func _handle_legs() -> void:
 			if legs.rotation_degrees != 0:
 				rotate_amount = 0
 
-		if legs.rotation_degrees != rotate_amount:
-			tween.interpolate_property(legs, "rotation_degrees", legs.rotation_degrees, rotate_amount, 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			tween.start()
-			yield(tween, "tween_completed")
+#		if legs.rotation_degrees != rotate_amount:
+#			tween.interpolate_property(legs, "rotation_degrees", legs.rotation_degrees, rotate_amount, 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+#			tween.start()
+#			yield(tween, "tween_completed")
 
 ## Godot functions
 func _ready() -> void:

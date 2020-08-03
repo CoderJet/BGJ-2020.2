@@ -32,6 +32,19 @@ render_target_update_mode = 3
 
 [node name="PlayerPlayground" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
 
+[node name="Label" type="Label" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.705882 )
+margin_left = 560.856
+margin_top = 284.463
+margin_right = 611.856
+margin_bottom = 298.463
+rect_scale = Vector2( 10, 10 )
+text = "PAUSED"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ScanLineEffect" type="TextureRect" parent="."]
 material = ExtResource( 2 )
 margin_left = 385.0
@@ -40,6 +53,19 @@ margin_right = 1234.0
 margin_bottom = 676.0
 texture = ExtResource( 3 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.521569 )
+margin_left = 560.856
+margin_top = 284.463
+margin_right = 611.856
+margin_bottom = 298.463
+rect_scale = Vector2( 10, 10 )
+text = "PAUSED"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -56,3 +82,4 @@ __meta__ = {
 position = Vector2( 640, 360 )
 stream = ExtResource( 5 )
 volume_db = -8.0
+autoplay = true
