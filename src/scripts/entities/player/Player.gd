@@ -61,7 +61,7 @@ func handle_weapon()-> void:
 					hit_scan.get_collider().take_damage(5)
 					emit_signal("hit_point", hit_scan.get_collision_point())
 				pos = hit_scan.get_collision_point()
-	
+
 			var effect = smoke_particle.instance()
 			effect.position = pos
 			effect.rotation = rotation
@@ -69,7 +69,7 @@ func handle_weapon()-> void:
 			if particle_holder == null:
 				particle_holder = get_tree().get_root().find_node("Particles", true, false)
 			particle_holder.add_child(effect)
-			
+
 			flash = true
 			flash_frames = 2
 			var length = ((pos - position).y)

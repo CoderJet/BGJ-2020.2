@@ -1,18 +1,13 @@
-extends Area2D
+class_name VHS
+extends Node
 
-signal tape_pickuped
-
-var collectable : bool = false
-
-
-func _on_body_entered(body: Node) -> void:
-	collectable = true
+var tape_type : int = Globals.TapeType.Pistol
 
 
-func _on_body_exited(body: Node) -> void:
-	collectable = false
-
-
-func _unhandled_key_input(event: InputEventKey) -> void:
-	if event.is_action_pressed("interact"):
-		emit_signal("tape_pickuped")
+func get_name() -> String:
+	match (tape_type):
+		Globals.TapeType.Pistol:
+			return "Pistol"
+		Globals.TapeType.SubMachineGun:
+			return "SMG"
+	return "Pistol"

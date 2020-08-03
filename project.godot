@@ -33,19 +33,29 @@ _global_script_classes=[ {
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://src/scripts/state-machines/StateMachine.gd"
+}, {
+"base": "Node",
+"class": "VHS",
+"language": "GDScript",
+"path": "res://src/scripts/entities/VHS.gd"
 } ]
 _global_script_class_icons={
 "Destructible": "",
 "Enemy": "",
 "Entity": "",
 "Player": "",
-"StateMachine": ""
+"StateMachine": "",
+"VHS": ""
 }
 
 [application]
 
 config/name="BGJ-2020.2"
 config/icon="res://assets/icons/icon.png"
+
+[autoload]
+
+Globals="*res://src/scripts/_GLOBALS_.gd"
 
 [display]
 

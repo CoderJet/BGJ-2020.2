@@ -75,7 +75,6 @@ texture = ExtResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="Body/muzzle_flash"]
 position = Vector2( 0, -3.8736 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 4 )
 color = Color( 0.964706, 0.964706, 0.65098, 1 )
 energy = 1.5
