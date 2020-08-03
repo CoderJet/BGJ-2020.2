@@ -48,8 +48,6 @@ zoom = Vector2( 5, 5 )
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 1 )
 
-[node name="VCR" type="Node" parent="."]
-
 [node name="Legs" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "running"
@@ -85,7 +83,6 @@ shadow_enabled = true
 visible = false
 position = Vector2( 330, 48 )
 rotation = -1.5708
-scale = Vector2( 1, 1 )
 z_index = 10
 points = PoolVector2Array( 0, 0, 0, 100 )
 width = 5.0

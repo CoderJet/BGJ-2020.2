@@ -2,6 +2,7 @@ class_name Player
 extends Entity
 
 signal hit_point(location)
+signal eject_tape(tape_type)
 
 export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
 
@@ -13,6 +14,8 @@ export(float) var weapon_range = 2000
 var smoke_particle := preload("res://src/scenes/particles/HitParticles.tscn")
 var mouse_pos := Vector2.ZERO
 var particle_holder:Node = null
+
+var current_gun = null#preload("res://src/scripts/entities/VHS/VHS-Pistol.gd").new()
 
 ## Public
 ## Animation
@@ -27,8 +30,8 @@ func play_running() -> void:
 
 ## Handlers
 func eject() -> void:
-	if get_node("VCR").get_children().size() == 1:
-		pass
+	emit_signal("eject_tape", current_gun)
+	current_gun = null
 
 func is_player() -> bool:
 	return true
@@ -50,13 +53,16 @@ func handle_movement(delta : float) -> void:
 	move_and_slide(velocity * speed, FLOOR_NORMAL)
 	_handle_legs()
 
-export(float) var cooldown_frames = 2
+export(float) var cooldown_frames = 0
 onready var cur_cooldown_frames = cooldown_frames
 func handle_weapon()-> void:
+	if !current_gun:
+		return
+
 	if Input.is_action_pressed("fire"):
-		var diff_x = rand_range(-100, 100)
-		var diff_y = rand_range(-50, 50)
-		
+		var diff_x = rand_range(current_gun.spray_x.x, current_gun.spray_x.y)
+		var diff_y = rand_range(current_gun.spray_y.x, current_gun.spray_y.y)
+
 		if cur_cooldown_frames > 0:
 			cur_cooldown_frames = cur_cooldown_frames - 1
 		else:
@@ -76,16 +82,8 @@ func handle_weapon()-> void:
 			effect.emitting = true
 			if particle_holder == null:
 				particle_holder = get_tree().get_root().find_node("Particles", true, false)
-#				if particle_holder == null:
-#					# Add it.
-#					var node = Node2D
-#					node.set_name("Particles")
-#					get_tree().get_root().add_child(node)
-#					particle_holder = node
 			particle_holder.add_child(effect)
 
-			
-			
 			flash = true
 			flash_frames = 2
 			#var length = pos.distance_to(position) - 330
@@ -139,3 +137,13 @@ func _process(delta: float) -> void:
 			$Body/Torso.frame = 1
 			$Body/muzzle_flash.visible = true
 			$Body/HitScan.visible = true
+
+
+func tape_pickuped(tape_type) -> void:
+	current_gun = tape_type
+	cooldown_frames = current_gun.cooldown
+
+
+#func _input(event: InputEvent) -> void:
+#	if event.is_action_pressed("eject"):
+#		emit_signal("eject_tape", current_gun)
