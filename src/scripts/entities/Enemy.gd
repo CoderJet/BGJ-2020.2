@@ -2,12 +2,24 @@ class_name Enemy
 extends Entity
 
 export (PoolVector2Array) var destinations := PoolVector2Array()
+export (NodePath) var polygon_path
+export (int) var polygon_start_point = 0
 var dest_idx = 0
 
 var path = []
 var target_point_world = Vector2()
 var target_position = Vector2()
+var arrived = false
 
+func _ready():
+	if polygon_path != "" and destinations.size() == 0:
+		destinations = get_node(polygon_path).polygon
+		for i in range(destinations.size()):
+			destinations[i] += get_node(polygon_path).position
+			
+	if polygon_start_point > destinations.size():
+		polygon_start_point = 0
+	dest_idx = polygon_start_point
 
 func take_damage(damage : int) -> void:
 	health -=  damage
@@ -37,22 +49,25 @@ func set_destination() -> void:
 
 
 
-func move_to_destination() -> void:
+func move_to_destination() -> bool:
 	if target_point_world == Vector2.ZERO:
-		return
+		return true
 
 	if len(path) == 0:
-		return
+		return true
 
 	if _move_to(target_point_world):
+		arrived = true
 		path.remove(0)
 		if len(path) == 0:
-			return
+			return true
 		target_point_world = path[0]
+		return true
+	return false
 
 
 func _move_to(world_position):
-	var MASS = 10.0
+	var MASS = 2.0
 	var ARRIVE_DISTANCE = 10.0
 
 	var desired_velocity = (world_position - position).normalized() * speed
