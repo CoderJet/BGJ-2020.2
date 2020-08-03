@@ -43,6 +43,16 @@ _global_script_classes=[ {
 "class": "StateMachinePistol",
 "language": "GDScript",
 "path": "res://src/scenes/Enemies/StateMachinePistol.gd"
+}, {
+"base": "Node",
+"class": "VHS_Data",
+"language": "GDScript",
+"path": "res://src/scripts/entities/VHS/VHS-Data.gd"
+}, {
+"base": "RigidBody2D",
+"class": "VHS_Item",
+"language": "GDScript",
+"path": "res://src/scripts/entities/player/VCR-Item.gd"
 } ]
 _global_script_class_icons={
 "Destructible": "",
@@ -51,7 +61,9 @@ _global_script_class_icons={
 "Entity": "",
 "Player": "",
 "StateMachine": "",
-"StateMachinePistol": ""
+"StateMachinePistol": "",
+"VHS_Data": "",
+"VHS_Item": ""
 }
 
 [application]

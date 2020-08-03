@@ -16,6 +16,8 @@ func _hit_scan() -> KinematicBody2D:
 
 func _process(delta):
 	#._process(delta)
+
+
 	if (cur_frames > 0):
 		modulate = Color("ff0000")
 		cur_frames -= 1
@@ -24,9 +26,9 @@ func _process(delta):
 
 func take_damage(damage : int) -> void:
 	health -=  damage
-	
+
 	cur_frames = color_mod_frames
-	
+
 	if health <= 0:
 		queue_free()
 
