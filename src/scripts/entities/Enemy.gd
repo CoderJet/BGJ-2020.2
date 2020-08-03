@@ -21,12 +21,6 @@ func _ready():
 		polygon_start_point = 0
 	dest_idx = polygon_start_point
 
-func take_damage(damage : int) -> void:
-	health -=  damage
-
-	if health <= 0:
-		queue_free()
-
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouse:
@@ -46,7 +40,6 @@ func set_destination() -> void:
 	# The index 0 is the starting cell
 	# we don't want the character to move back to it in this example
 	target_point_world = path[0]
-
 
 
 func move_to_destination() -> bool:

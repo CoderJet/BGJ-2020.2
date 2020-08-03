@@ -43,11 +43,6 @@ _global_script_classes=[ {
 "class": "StateMachinePistol",
 "language": "GDScript",
 "path": "res://src/scenes/Enemies/StateMachinePistol.gd"
-}, {
-"base": "Node",
-"class": "VHS",
-"language": "GDScript",
-"path": "res://src/scripts/entities/VHS.gd"
 } ]
 _global_script_class_icons={
 "Destructible": "",
@@ -56,13 +51,13 @@ _global_script_class_icons={
 "Entity": "",
 "Player": "",
 "StateMachine": "",
-"StateMachinePistol": "",
-"VHS": ""
+"StateMachinePistol": ""
 }
 
 [application]
 
 config/name="BGJ-2020.2"
+run/main_scene="res://src/scenes/MainUI/MainScene.tscn"
 config/icon="res://assets/icons/icon.png"
 
 [autoload]
@@ -73,8 +68,8 @@ Globals="*res://src/scripts/_GLOBALS_.gd"
 
 window/size/width=1280
 window/size/height=720
+mouse_cursor/custom_image="res://assets/textures/cursor.png"
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
 
 [input]
 

@@ -20,7 +20,6 @@ func play_idle() -> void:
 	if legs.animation != "idle":
 		legs.play("idle")
 
-
 func play_running() -> void:
 	if legs.animation != "running":
 		legs.play("running")

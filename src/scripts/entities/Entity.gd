@@ -9,6 +9,12 @@ export (int, 1, 100, 1) var max_health : int = 10
 var velocity := Vector2.ZERO
 var health : int = 10
 
+func take_damage(damage : int) -> void:
+	health -=  damage
+
+	if health <= 0:
+		print(name, " is dead!")
+		queue_free()
 
 func _ready() -> void :
 	health = max_health

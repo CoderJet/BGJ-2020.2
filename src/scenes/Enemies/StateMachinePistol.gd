@@ -1,6 +1,7 @@
 class_name StateMachinePistol
 extends StateMachine
 
+onready var player = find_node("Player")
 
 func _ready() -> void:
 	add_state("idle")
@@ -14,8 +15,42 @@ func _ready() -> void:
 
 var wait_time = 5
 var next_time = 0
+
+var shoot_time = 0.4
+var next_time_shoot = 0
 ## State machine logic
 func _state_logic(delta : float) -> void:
+	if [states.chasing].has(state):
+		parent._move_to(player.position)
+		if player.position.distance_to(parent.position) < 2000:
+			print ("I'm near you!")
+			state = states.shoot
+		pass
+	
+	if [states.shoot].has(state):
+		#parent.rotation = (parent.rotation + (player.position.angle() * 0.1))
+		#parent.rotation = lerp(parent.rotation, PI + parent.position.angle_to_point(player.position), delta)
+		#parent.interpolate_property(parent.rotation)
+		Globals.SmoothLookAt(parent, player.position, 0.2)
+#		var angle = rad2deg(parent.position.angle_to_point(player.position))
+#		print(angle)
+#		if angle < 0:
+#			parent.rotation_degrees += 1
+#			#parent.rotate( deg2rad( AngularLookAt( parent.global_position, parent.global_rotation, player.position, 1 ) ) )
+#		elif angle > 0:
+#			parent.rotation_degrees -= 1
+#		else:
+#			pass
+		
+		if next_time_shoot <= 0:
+			next_time_shoot = shoot_time
+			var other = parent._hit_scan()
+			if other and other.has_method("is_player"):
+				other.take_damage(1)
+				pass
+		else:
+			next_time_shoot -= delta
+	
 	if [states.idle].has(state):
 #		if len(parent.path) == 0:
 #
