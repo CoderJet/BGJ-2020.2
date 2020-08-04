@@ -86,6 +86,7 @@ environment = ExtResource( 10 )
 
 [node name="Floor" type="TileMap" parent="."]
 modulate = Color( 0.509804, 0.635294, 0.917647, 1 )
+scale = Vector2( 0.5, 0.5 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 500, 500 )
 format = 1
@@ -93,6 +94,7 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="AStar" type="TileMap" parent="."]
 modulate = Color( 0.407843, 0.541176, 0.682353, 1 )
+scale = Vector2( 0.5, 0.5 )
 cell_size = Vector2( 500, 500 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 format = 1
@@ -102,7 +104,7 @@ map_size = Vector2( 64, 64 )
 [node name="Node" type="Node" parent="."]
 
 [node name="Box" type="StaticBody2D" parent="Node"]
-position = Vector2( 6750, 3500 )
+position = Vector2( 576, 1748.85 )
 collision_layer = 2147483652
 
 [node name="Walls_Box" type="Sprite" parent="Node/Box"]
@@ -113,7 +115,7 @@ position = Vector2( 10.7026, 1.18921 )
 shape = SubResource( 2 )
 
 [node name="Enemy" type="KinematicBody2D" parent="Node"]
-position = Vector2( 9244, 2753 )
+position = Vector2( 4496, 1768 )
 collision_layer = 4
 script = ExtResource( 3 )
 speed = 500.0
@@ -131,14 +133,14 @@ position = Vector2( 8.3252, 0 )
 shape = SubResource( 3 )
 
 [node name="Enemy2" parent="Node" instance=ExtResource( 11 )]
-position = Vector2( 13925.2, 5798.82 )
+position = Vector2( 7751.2, 4047.67 )
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")
 polygon_start_point = 2
 
 [node name="Enemy3" parent="Node" instance=ExtResource( 11 )]
-position = Vector2( 11543.9, 3350.18 )
+position = Vector2( 5369.9, 1599.03 )
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")
@@ -146,14 +148,14 @@ polygon_path = NodePath("../../Polygon2D")
 [node name="Particles" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 6750, 4250 )
+position = Vector2( 576, 2498.85 )
 collision_mask = 6
 speed = 2500.0
 smoothing = 0.5
 cooldown_frames = 5.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( 12424.7, 3118.02 )
+position = Vector2( 6250.7, 1366.88 )
 scale = Vector2( 1, 0.986318 )
 color = Color( 1, 1, 1, 0 )
 polygon = PoolVector2Array( -553.536, -444.963, 2046.94, -439.854, 2036.86, 2232.46, -563.615, 2227.35 )
@@ -161,8 +163,8 @@ polygon = PoolVector2Array( -553.536, -444.963, 2046.94, -439.854, 2036.86, 2232
 [node name="Tapes" type="Node" parent="."]
 
 [node name="VHS" parent="Tapes" instance=ExtResource( 13 )]
-position = Vector2( 7751.31, 3905.13 )
+position = Vector2( 1577.31, 2153.98 )
 
 [node name="VHS2" parent="Tapes" instance=ExtResource( 13 )]
-position = Vector2( 7758.45, 4613.9 )
+position = Vector2( 1584.45, 2862.75 )
 tape_type = 1

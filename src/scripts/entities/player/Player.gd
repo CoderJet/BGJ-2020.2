@@ -5,17 +5,26 @@ signal hit_point(location)
 signal eject_tape(tape_type)
 
 export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
+export (float) var cooldown_frames = 0
+export(float) var weapon_range = 2000
 
 onready var hit_scan := get_node("Body/RayCast2D")
 onready var legs : AnimatedSprite = get_node("Legs")
 onready var tween : Tween = get_node("Tween")
-export(float) var weapon_range = 2000
 
 var smoke_particle := preload("res://src/scenes/particles/HitParticles.tscn")
 var mouse_pos := Vector2.ZERO
-var particle_holder:Node = null
+var particle_holder : Node = null
 
-var current_gun = null#preload("res://src/scripts/entities/VHS/VHS-Pistol.gd").new()
+var current_gun = null
+
+#onready var cur_cooldown_frames = cooldown_frames
+
+onready var shot_delay : Timer = get_node("ShotDelay")
+
+
+var flash = false
+var flash_frames = 0
 
 ## Public
 ## Animation
@@ -52,26 +61,21 @@ func handle_movement(delta : float) -> void:
 	move_and_slide(velocity * speed, FLOOR_NORMAL)
 	_handle_legs()
 
-export(float) var cooldown_frames = 0
-onready var cur_cooldown_frames = cooldown_frames
+
 func handle_weapon()-> void:
 	if !current_gun:
 		return
 
 	if Input.is_action_pressed("fire"):
-		var diff_x = rand_range(current_gun.spray_x.x, current_gun.spray_x.y)
-		var diff_y = rand_range(current_gun.spray_y.x, current_gun.spray_y.y)
+		if shot_delay.is_stopped() && current_gun.magazine_size != 0:
+			var diff_x = rand_range(current_gun.spray_x.x, current_gun.spray_x.y)
+			var diff_y = rand_range(current_gun.spray_y.x, current_gun.spray_y.y)
 
-		if cur_cooldown_frames > 0:
-			cur_cooldown_frames = cur_cooldown_frames - 1
-		else:
-			cur_cooldown_frames = cooldown_frames
-			#var pos = get_global_mouse_position()
 			var pos = Vector2(0 + diff_x, weapon_range + diff_y)
 			hit_scan.cast_to = Vector2(weapon_range + diff_y, diff_x)
 			if hit_scan.is_colliding():
 				if hit_scan.get_collider().has_method("take_damage"):
-					hit_scan.get_collider().take_damage(5)
+					hit_scan.get_collider().take_damage(current_gun.gun_damage)
 					emit_signal("hit_point", hit_scan.get_collision_point())
 				pos = hit_scan.get_collision_point()
 
@@ -91,8 +95,9 @@ func handle_weapon()-> void:
 				$Body/HitScan.points[1] = Vector2(diff_x, pos.distance_to(position) - 330)
 			else:
 				$Body/HitScan.points[1] = Vector2(0 + diff_x, weapon_range + diff_y)
-	else:
-		cur_cooldown_frames = cooldown_frames
+
+			current_gun.magazine_size -= 1
+			shot_delay.start()
 
 ## Private
 func _handle_legs() -> void:
@@ -116,8 +121,7 @@ func _handle_legs() -> void:
 func _ready() -> void:
 	play_idle()
 
-var flash = false
-var flash_frames = 0
+
 func _process(delta: float) -> void:
 	## Rotate the torso inline with the mouse position
 	mouse_pos = get_local_mouse_position()
@@ -140,7 +144,8 @@ func _process(delta: float) -> void:
 
 func tape_pickuped(tape_type) -> void:
 	current_gun = tape_type
-	cooldown_frames = current_gun.cooldown
+	shot_delay.wait_time = tape_type.shot_delay
+	cooldown_frames = current_gun.shot_delay
 
 
 #func _input(event: InputEvent) -> void:

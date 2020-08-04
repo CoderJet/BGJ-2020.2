@@ -81,7 +81,8 @@ Globals="*res://src/scripts/_GLOBALS_.gd"
 window/size/width=1280
 window/size/height=720
 mouse_cursor/custom_image="res://assets/textures/cursor.png"
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [input]
 
@@ -136,3 +137,4 @@ interact={
 [rendering]
 
 quality/2d/use_nvidia_rect_flicker_workaround=true
+quality/2d/use_pixel_snap=true

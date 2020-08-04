@@ -44,6 +44,11 @@ zoom = Vector2( 5, 5 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="ShotDelay" type="Timer" parent="."]
+one_shot = true
+
+[node name="ReloadDelay" type="Timer" parent="."]
+
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 1 )
 
@@ -76,7 +81,6 @@ texture = ExtResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="Body/muzzle_flash"]
 position = Vector2( 0, -3.8736 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 4 )
 color = Color( 0.964706, 0.964706, 0.65098, 1 )
 energy = 1.5
@@ -86,7 +90,6 @@ shadow_enabled = true
 visible = false
 position = Vector2( 330, 48 )
 rotation = -1.5708
-scale = Vector2( 1, 1 )
 z_index = 10
 points = PoolVector2Array( 0, 0, 0, 100 )
 width = 5.0

@@ -9,7 +9,7 @@ var collectable : bool = false
 var vhs_pistol := preload("res://src/scripts/entities/VHS/VHS-Pistol.gd").new()
 var vhs_smg := preload("res://src/scripts/entities/VHS/VHS-SMG.gd").new()
 
-var vhs_gun
+var vhs_gun = null
 
 func generate_pistol() -> void:
 	vhs_gun = vhs_pistol
@@ -20,11 +20,12 @@ func generate_smg() -> void:
 
 
 func _ready() -> void:
-	match (tape_type):
-		Globals.TapeType.Pistol:
-			generate_pistol()
-		Globals.TapeType.SubMachineGun:
-			generate_smg()
+	if vhs_gun == null:
+		match (tape_type):
+			Globals.TapeType.Pistol:
+				generate_pistol()
+			Globals.TapeType.SubMachineGun:
+				generate_smg()
 
 
 func shoot_out(angle : float, force : float) -> void:

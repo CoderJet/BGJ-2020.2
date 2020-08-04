@@ -82,4 +82,3 @@ __meta__ = {
 position = Vector2( 640, 360 )
 stream = ExtResource( 5 )
 volume_db = -8.0
-autoplay = true

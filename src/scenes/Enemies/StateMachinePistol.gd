@@ -26,7 +26,7 @@ func _state_logic(delta : float) -> void:
 			print ("I'm near you!")
 			state = states.shoot
 		pass
-	
+
 	if [states.shoot].has(state):
 		#parent.rotation = (parent.rotation + (player.position.angle() * 0.1))
 		#parent.rotation = lerp(parent.rotation, PI + parent.position.angle_to_point(player.position), delta)
@@ -41,7 +41,7 @@ func _state_logic(delta : float) -> void:
 #			parent.rotation_degrees -= 1
 #		else:
 #			pass
-		
+
 		if next_time_shoot <= 0:
 			next_time_shoot = shoot_time
 			var other = parent._hit_scan()
@@ -50,7 +50,7 @@ func _state_logic(delta : float) -> void:
 				pass
 		else:
 			next_time_shoot -= delta
-	
+
 	if [states.idle].has(state):
 #		if len(parent.path) == 0:
 #
