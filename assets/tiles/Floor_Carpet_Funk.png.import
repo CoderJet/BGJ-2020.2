@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Floor_Carpet_Funk.png-528af8a0d31c150460bb6956225a6682.stex"
+path="res://.import/Floor_Carpet_Funk.png-bfd9ac1ba6410e5aa913c3ab19880568.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Floor_Carpet_Funk.png"
-dest_files=[ "res://.import/Floor_Carpet_Funk.png-528af8a0d31c150460bb6956225a6682.stex" ]
+source_file="res://assets/tiles/Floor_Carpet_Funk.png"
+dest_files=[ "res://.import/Floor_Carpet_Funk.png-bfd9ac1ba6410e5aa913c3ab19880568.stex" ]
 
 [params]
 
