@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/VCR Music_main loop01.wav-1c3779ca7abc68a46874c16e092c8a88.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/VCR Music_main loop01.wav"
+dest_files=[ "res://.import/VCR Music_main loop01.wav-1c3779ca7abc68a46874c16e092c8a88.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

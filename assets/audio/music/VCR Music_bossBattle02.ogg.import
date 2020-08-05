@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/VCR Music_bossBattle02.ogg-907d9273523bd18b58d2a9a0e71eeb80.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/music/VCR Music_bossBattle02.ogg"
+dest_files=[ "res://.import/VCR Music_bossBattle02.ogg-907d9273523bd18b58d2a9a0e71eeb80.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

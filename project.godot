@@ -72,6 +72,10 @@ config/name="BGJ-2020.2"
 run/main_scene="res://src/scenes/MainUI/MainScene.tscn"
 config/icon="res://assets/icons/icon.png"
 
+[audio]
+
+default_bus_layout="res://src/default_bus_layout.tres"
+
 [autoload]
 
 Globals="*res://src/scripts/_GLOBALS_.gd"

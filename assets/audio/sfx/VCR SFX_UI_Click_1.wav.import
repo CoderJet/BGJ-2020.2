@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/VCR SFX_UI_Click_1.wav-ecb630c1c84b8c393bb2d42f5a34af27.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/VCR SFX_UI_Click_1.wav"
+dest_files=[ "res://.import/VCR SFX_UI_Click_1.wav-ecb630c1c84b8c393bb2d42f5a34af27.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

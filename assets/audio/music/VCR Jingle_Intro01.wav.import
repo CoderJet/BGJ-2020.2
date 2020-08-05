@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/VCR Jingle_Intro01.wav-9b00d402bbc8ec6ebcfab59e580884f2.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/VCR Jingle_Intro01.wav"
+dest_files=[ "res://.import/VCR Jingle_Intro01.wav-9b00d402bbc8ec6ebcfab59e580884f2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/VCR SFX_HeadThrow.wav-62145d0eb793cf883f3c9e8f60327a40.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/VCR SFX_HeadThrow.wav"
+dest_files=[ "res://.import/VCR SFX_HeadThrow.wav-62145d0eb793cf883f3c9e8f60327a40.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/VCR SFX_ReloadLong.wav-6050971cb0e8977fccdbd69d6a2154ef.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/VCR SFX_ReloadLong.wav"
+dest_files=[ "res://.import/VCR SFX_ReloadLong.wav-6050971cb0e8977fccdbd69d6a2154ef.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
