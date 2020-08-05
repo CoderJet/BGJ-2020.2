@@ -5,7 +5,7 @@ func _init() -> void:
 	self.spray_x = Vector2(-50, 50)
 	self.spray_y = Vector2(-50, 50)
 	self.gun_damage = 5
-	self.max_magixine_size = 6
-	self.magazine_size = self.max_magixine_size
+	self.max_magazine_size = 6
+	self.magazine_size = self.max_magazine_size
 	self.shot_delay = 0.75
-	self.reload_delay = 1.0
+	self.reload_delay = 0.1

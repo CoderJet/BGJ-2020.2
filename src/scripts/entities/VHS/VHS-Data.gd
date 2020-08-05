@@ -1,14 +1,14 @@
 class_name VHS_Data
 extends Node
 
-var tape_type : int = Globals.TapeType.Pistol
-var spray_x := Vector2()
-var spray_y := Vector2()
-var gun_damage : int
-var shot_delay : float
-var max_magixine_size : int
-var magazine_size : int
-var reload_delay : float
+export var tape_type : int = Globals.TapeType.Pistol
+export var spray_x := Vector2()
+export var spray_y := Vector2()
+export var gun_damage : int
+export var shot_delay : float
+export var max_magazine_size : int
+export var magazine_size : int
+export var reload_delay : float
 
 func gun_name() -> String:
 	match (tape_type):

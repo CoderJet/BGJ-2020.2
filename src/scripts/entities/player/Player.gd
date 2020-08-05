@@ -5,26 +5,23 @@ signal hit_point(location)
 signal eject_tape(tape_type)
 
 export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
-export (float) var cooldown_frames = 0
-export(float) var weapon_range = 2000
+#export (float) var cooldown_frames = 0
+export (float) var weapon_range = 2000
 
-onready var hit_scan := get_node("Body/RayCast2D")
-onready var legs : AnimatedSprite = get_node("Legs")
-onready var tween : Tween = get_node("Tween")
+onready var hit_scan 		: RayCast2D			= get_node("Body/RayCast2D")
+onready var legs 			: AnimatedSprite 	= get_node("Legs")
+onready var tween 			: Tween 			= get_node("Tween")
+onready var shot_delay 		: Timer 			= get_node("ShotDelay")
+onready var reload_delay 	: Timer 			= get_node("ReloadDelay")
 
 var smoke_particle := preload("res://src/scenes/particles/HitParticles.tscn")
-var mouse_pos := Vector2.ZERO
+var mouse_pos 		: Vector2 = Vector2.ZERO
 var particle_holder : Node = null
 
 var current_gun = null
-
-#onready var cur_cooldown_frames = cooldown_frames
-
-onready var shot_delay : Timer = get_node("ShotDelay")
-
-
 var flash = false
 var flash_frames = 0
+var reloading : bool = false
 
 ## Public
 ## Animation
@@ -41,8 +38,24 @@ func eject() -> void:
 	emit_signal("eject_tape", current_gun)
 	current_gun = null
 
+
+func tape_pickuped(tape_type) -> void:
+	current_gun = tape_type
+	shot_delay.wait_time = tape_type.shot_delay
+	reload_delay.wait_time = tape_type.reload_delay
+
 func is_player() -> bool:
 	return true
+
+
+func requires_reloading() -> bool:
+	return current_gun.magazine_size < current_gun.max_magazine_size
+
+
+func is_magazine_full() -> bool:
+	#current_gun.magazine_size = min(current_gun.magazine_size, current_gun.max_magazine_size)
+	return current_gun.magazine_size == current_gun.max_magazine_size
+
 
 func handle_movement(delta : float) -> void:
 	velocity = Vector2.ZERO
@@ -57,8 +70,13 @@ func handle_movement(delta : float) -> void:
 	elif Input.is_action_pressed("backwards"):
 		velocity.y = 1
 
-	velocity = velocity.normalized()#.rotated(rotation).normalized()
-	move_and_slide(velocity * speed, FLOOR_NORMAL)
+	velocity = velocity.normalized()
+
+	var new_speed = speed
+	if reloading:
+		new_speed /= 2
+
+	move_and_slide(velocity * new_speed, FLOOR_NORMAL)
 	_handle_legs()
 
 
@@ -79,27 +97,40 @@ func handle_weapon()-> void:
 					emit_signal("hit_point", hit_scan.get_collision_point())
 				pos = hit_scan.get_collision_point()
 
-			var effect = smoke_particle.instance()
-			effect.position = pos
-			effect.rotation = rotation
-			effect.emitting = true
-			if particle_holder == null:
-				particle_holder = get_tree().get_root().find_node("Particles", true, false)
-			particle_holder.add_child(effect)
-
-			flash = true
-			flash_frames = 2
-			#var length = pos.distance_to(position) - 330
-			$Body/HitScan.points[0] = Vector2(0, 0)
-			if hit_scan.is_colliding():
-				$Body/HitScan.points[1] = Vector2(diff_x, pos.distance_to(position) - 330)
-			else:
-				$Body/HitScan.points[1] = Vector2(0 + diff_x, weapon_range + diff_y)
+			_create_impact(pos)
+			_handle_gun_flash(pos, diff_x, diff_y)
 
 			current_gun.magazine_size -= 1
 			shot_delay.start()
 
+
+func rewind_tape() -> void:
+	if reload_delay.is_stopped():
+		if !is_magazine_full():
+			current_gun.magazine_size += 1
+			reload_delay.start()
+
 ## Private
+func _create_impact(pos : Vector2) -> void:
+	var effect = smoke_particle.instance()
+	effect.position = pos
+	effect.rotation = rotation
+	effect.emitting = true
+	if particle_holder == null:
+		particle_holder = get_tree().get_root().find_node("Particles", true, false)
+	particle_holder.add_child(effect)
+
+
+func _handle_gun_flash(pos : Vector2, offset_x : float, offset_y : float) -> void:
+	flash = true
+	flash_frames = 2
+	#var length = pos.distance_to(position) - 330
+	$Body/HitScan.points[0] = Vector2(0, 0)
+	if hit_scan.is_colliding():
+		$Body/HitScan.points[1] = Vector2(offset_x, pos.distance_to(position) - 330)
+	else:
+		$Body/HitScan.points[1] = Vector2(0 + offset_x, weapon_range + offset_y)
+
 func _handle_legs() -> void:
 	if !tween.is_active():
 		var rotate_amount = 0
@@ -111,11 +142,6 @@ func _handle_legs() -> void:
 		else:
 			if legs.rotation_degrees != 0:
 				rotate_amount = 0
-
-#		if legs.rotation_degrees != rotate_amount:
-#			tween.interpolate_property(legs, "rotation_degrees", legs.rotation_degrees, rotate_amount, 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-#			tween.start()
-#			yield(tween, "tween_completed")
 
 ## Godot functions
 func _ready() -> void:
@@ -140,14 +166,3 @@ func _process(delta: float) -> void:
 			$Body/Torso.frame = 1
 			$Body/muzzle_flash.visible = true
 			$Body/HitScan.visible = true
-
-
-func tape_pickuped(tape_type) -> void:
-	current_gun = tape_type
-	shot_delay.wait_time = tape_type.shot_delay
-	cooldown_frames = current_gun.shot_delay
-
-
-#func _input(event: InputEvent) -> void:
-#	if event.is_action_pressed("eject"):
-#		emit_signal("eject_tape", current_gun)

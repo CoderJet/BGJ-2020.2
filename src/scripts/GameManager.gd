@@ -8,7 +8,6 @@ func _ready() -> void:
 
 	for child in get_node("Tapes").get_children():
 		if child is VHS_Item:
-			print(child.vhs_gun.gun_name())
 			child.connect("tape_pickuped", self, "tape_pickuped")
 			self.connect("tape_pickuped", $Player, "tape_pickuped")
 
@@ -16,12 +15,8 @@ func _ready() -> void:
 func tape_pickuped(tape_type) -> void:
 	for child in get_node("Tapes").get_children():
 		if child is VHS_Item:
-			print("============")
-			print(tape_type.gun_name())
-			print("In world: %s" % [child.vhs_gun.gun_name()])
 			if child.vhs_gun.tape_type == tape_type.tape_type:
 				if $Player.current_gun == null:
-					print("3")
 					get_node("Tapes").remove_child(child)
 					emit_signal("tape_pickuped", tape_type)
 
