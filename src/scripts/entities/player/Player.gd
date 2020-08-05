@@ -34,16 +34,7 @@ func play_running() -> void:
 		legs.play("running")
 
 ## Handlers
-func eject() -> void:
-	emit_signal("eject_tape", current_gun)
-	current_gun = null
-
-
-func tape_pickuped(tape_type) -> void:
-	current_gun = tape_type
-	shot_delay.wait_time = tape_type.shot_delay
-	reload_delay.wait_time = tape_type.reload_delay
-
+## Checks
 func is_player() -> bool:
 	return true
 
@@ -53,8 +44,18 @@ func requires_reloading() -> bool:
 
 
 func is_magazine_full() -> bool:
-	#current_gun.magazine_size = min(current_gun.magazine_size, current_gun.max_magazine_size)
 	return current_gun.magazine_size == current_gun.max_magazine_size
+
+## Player functionality
+func eject() -> void:
+	emit_signal("eject_tape", current_gun)
+	current_gun = null
+
+
+func tape_pickuped(tape_type) -> void:
+	current_gun = tape_type
+	shot_delay.wait_time = tape_type.shot_delay
+	reload_delay.wait_time = tape_type.reload_delay
 
 
 func handle_movement(delta : float) -> void:
@@ -89,15 +90,15 @@ func handle_weapon()-> void:
 			var diff_x = rand_range(current_gun.spray_x.x, current_gun.spray_x.y)
 			var diff_y = rand_range(current_gun.spray_y.x, current_gun.spray_y.y)
 
-			var pos = Vector2(0 + diff_x, weapon_range + diff_y)
+			var pos = Vector2.ZERO
 			hit_scan.cast_to = Vector2(weapon_range + diff_y, diff_x)
 			if hit_scan.is_colliding():
 				if hit_scan.get_collider().has_method("take_damage"):
 					hit_scan.get_collider().take_damage(current_gun.gun_damage)
 					emit_signal("hit_point", hit_scan.get_collision_point())
 				pos = hit_scan.get_collision_point()
+				_create_impact(pos)
 
-			_create_impact(pos)
 			_handle_gun_flash(pos, diff_x, diff_y)
 
 			current_gun.magazine_size -= 1
@@ -150,10 +151,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	## Rotate the torso inline with the mouse position
-	mouse_pos = get_local_mouse_position()
+	look_at(get_global_mouse_position())
+	#mouse_pos = get_global_mouse_position()
 	# Interpret the value in degrees, so we can work with them easier.
-	var torso_value = fmod(rad2deg(rotation + (mouse_pos.angle() * smoothing)), 360)
-	rotation_degrees = torso_value
+	#var torso_value = fmod(rad2deg(rotation + (mouse_pos.angle() * smoothing)), 360)
+	#rotation_degrees = torso_value
 
 	if flash == true:
 		if flash_frames == 0:

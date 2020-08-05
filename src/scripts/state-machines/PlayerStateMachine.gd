@@ -22,15 +22,15 @@ func _get_transition(delta : float):
 	# Move between states: run -> reloading
 	match state:
 		states.idle:
-			if parent.velocity != Vector2.ZERO && !parent.reloading:
+			if parent.reloading:
+				return states.reload
+			elif parent.velocity != Vector2.ZERO:
 				return states.run
-			elif parent.reloading:
-				return states.reload
 		states.run:
-			if parent.velocity == Vector2.ZERO && !parent.reloading:
-				return states.idle
-			elif parent.reloading:
+			if parent.reloading:
 				return states.reload
+			elif parent.velocity == Vector2.ZERO:
+				return states.idle
 		states.reload:
 			if !parent.reloading:
 				return states.idle
