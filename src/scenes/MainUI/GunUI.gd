@@ -1,27 +1,18 @@
-extends TextureRect
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 func load_gun(name : String, max_size : int, cur_size : int, background_image : String = ""):
-	$Background.visible = true
-	$Label.visible = true
-	$Label.text = name
+	$UI_GUN/BackgroundImage.texture = load(background_image)
 	var prog = float(cur_size) / float(max_size)
 	$Full.progress = prog
 	$Empty.progress = prog
 	has_gun = true
 	
 func unload_gun():
-	$Background.visible = true
-	$Label.visible = false
+	$UI_GUN/BackgroundImage.texture = load("res://assets/UI/UI_WEAPON_NULL.png")
 	$Full.progress = 0
 	$Empty.progress = 1
 	has_gun = false
@@ -30,7 +21,7 @@ var reload_time = 0
 var has_gun = false
 
 func tape_pickuped(tape_type) -> void:
-	load_gun(tape_type.gun_name(), tape_type.max_magazine_size, tape_type.magazine_size)
+	load_gun(tape_type.gun_name(), tape_type.max_magazine_size, tape_type.magazine_size, tape_type.image)
 	reload_time = tape_type.reload_delay
 
 func tape_ejected(tape_type) -> void:

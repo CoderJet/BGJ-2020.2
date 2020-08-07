@@ -10,6 +10,7 @@ export var max_magazine_size : int
 export var magazine_size : int
 export var reload_delay : float
 export var audio_clip : String
+export var image : String
 
 func gun_name() -> String:
 	match (tape_type):

@@ -9,6 +9,8 @@ signal rewind_stopped()
 
 #export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
 export (float) var weapon_range = 2000
+export (float) var dash_speed = 4000
+export (float) var dash_time = 0.5
 
 onready var hit_scan 		: RayCast2D			= get_node("Body/RayCast2D")
 onready var legs 			: AnimatedSprite 	= get_node("Legs")
@@ -25,6 +27,12 @@ var current_gun = null
 var flash = false
 var flash_frames = 0
 var reloading : bool = false
+
+#Dashing
+var dashing = false
+var dash_cooldown = 0
+var direction = Vector2(0,0)
+var direction_angle = 0
 
 ## Public
 ## Animation
@@ -71,20 +79,48 @@ func tape_pickuped(tape_type) -> void:
 
 func handle_movement(delta : float) -> void:
 	velocity = Vector2.ZERO
-
-	if Input.is_action_pressed('left'):
-		velocity.x = -1
-	elif Input.is_action_pressed('right'):
-		velocity.x = 1
-
-	if Input.is_action_pressed("forward"):
-		velocity.y = -1
-	elif Input.is_action_pressed("backwards"):
-		velocity.y = 1
-
-	velocity = velocity.normalized()
-
 	var new_speed = speed
+
+	if dashing:
+		dash_cooldown -= delta
+		velocity = direction
+		new_speed = dash_speed
+		if dash_cooldown <= 0:
+			dash_cooldown = 0
+			dashing = false
+			$Legs.visible = true
+			torso.scale = Vector2(1, 1)
+			torso.rotation_degrees = 0
+			if !current_gun:
+				torso.play("gunless")
+			else:
+				torso.play("gunning")
+				torso.stop()
+				torso.frame = 0
+	else:
+		if Input.is_action_pressed('left'):
+			velocity.x = -1
+		elif Input.is_action_pressed('right'):
+			velocity.x = 1
+
+		if Input.is_action_pressed("forward"):
+			velocity.y = -1
+		elif Input.is_action_pressed("backwards"):
+			velocity.y = 1
+
+		velocity = velocity.normalized()
+
+		if Input.is_action_just_pressed("dash") and current_gun and !reloading:
+			if velocity.x != 0 || velocity.y != 0:
+				direction = velocity
+				direction_angle = $Legs.rotation_degrees
+				dash_cooldown = dash_time
+				dashing = true
+				$Legs.visible = false
+				torso.play("dodging")
+				if velocity.x < 0 and velocity.y == 0:
+					torso.scale.x = -1
+
 	if reloading:
 		new_speed /= 2
 
@@ -94,6 +130,9 @@ func handle_movement(delta : float) -> void:
 
 func handle_weapon()-> void:
 	if !current_gun:
+		return
+
+	if dashing:
 		return
 
 	if Input.is_action_pressed("fire"):
@@ -120,9 +159,12 @@ func handle_weapon()-> void:
 			current_gun.magazine_size -= 1
 			shot_delay.start()
 
-func rewind_start() -> void:
-	reloading = true
-	emit_signal("rewind_started")
+func rewind_start() -> bool:
+	if !dashing:
+		reloading = true
+		emit_signal("rewind_started")
+		return true
+	return false
 
 func rewind_stop() -> void:
 	reloading = false
@@ -164,16 +206,22 @@ func _handle_gun_flash(pos : Vector2, offset_x : float, offset_y : float) -> voi
 		$Body/HitScan.points[1] = Vector2(0 + offset_x, weapon_range + offset_y)
 
 func _handle_legs() -> void:
-	if !tween.is_active():
-		var rotate_amount = 0
-
+	var angle = 0
+	if Input.is_action_pressed("forward"):
+		angle = -90
 		if Input.is_action_pressed("left"):
-			rotate_amount = -45
-		elif Input.is_action_pressed("right"):
-			rotate_amount = 45
-		else:
-			if legs.rotation_degrees != 0:
-				rotate_amount = 0
+			angle -= 45
+		if Input.is_action_pressed("right"):
+			angle += 45
+
+	if Input.is_action_pressed("backwards"):
+		angle = 90
+		if Input.is_action_pressed("left"):
+			angle += 45
+		if Input.is_action_pressed("right"):
+			angle -= 45
+
+	$Legs.rotation_degrees = angle
 
 ## Godot functions
 func _ready() -> void:
@@ -181,7 +229,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	## Rotate the torso inline with the mouse position
-	look_at(get_global_mouse_position())
+	if !dashing:
+		$Body.look_at(get_global_mouse_position())
+	else:
+		$Body.rotation_degrees = direction_angle
 
 	if flash == true:
 		if flash_frames == 0:

@@ -10,3 +10,4 @@ func _init() -> void:
 	self.shot_delay = 0.05
 	self.reload_delay = 0.15
 	self.audio_clip = "VCR SFX_Fire_SMG.wav"
+	self.image = "res://assets/UI/UI_WEAPON_SMG.png"

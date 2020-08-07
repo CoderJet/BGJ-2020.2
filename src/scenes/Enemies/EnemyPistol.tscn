@@ -1,8 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/scenes/Enemies/EnemyPistol.gd" type="Script" id=1]
 [ext_resource path="res://src/scenes/Enemies/StateMachinePistol.gd" type="Script" id=2]
-[ext_resource path="res://assets/textures/enemy/EnemyTemp.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/enemy/EnemyMini.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/enemy/EnemyMiniFlash.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "die",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 119.729, 135.169 )
@@ -17,9 +31,9 @@ dead_sfx = "VCR SFX_EnemyDead.wav"
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[node name="Body" type="Sprite" parent="."]
-position = Vector2( 71.2719, 39.1996 )
-texture = ExtResource( 3 )
+[node name="Body" type="AnimatedSprite" parent="."]
+position = Vector2( 25.9659, 1.44463 )
+frames = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -8, -8 )
@@ -34,7 +48,7 @@ position = Vector2( -393.629, -20.1549 )
 polygon = PoolVector2Array( 320.073, -83.3246, 2748.71, -802.463, 3130.12, -463.435, 3291.16, -1.50867, 3172.5, 434.99, 2765.66, 782.494, 323.248, 84.9399, 183.557, 11.9196 )
 
 [node name="Raycast" type="RayCast2D" parent="."]
-position = Vector2( 297.977, 88.5241 )
+position = Vector2( 242.533, 0.349602 )
 enabled = true
 cast_to = Vector2( 2000, 0 )
 

@@ -1,17 +1,18 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/scenes/entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/tiles/Floor_Carpet_Funk.png" type="Texture" id=2]
-[ext_resource path="res://src/scenes/WorldEnvironment.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/UI/UI_BG.png" type="Texture" id=3]
+[ext_resource path="res://assets/shaders/scroll_shader.tres" type="Material" id=4]
 [ext_resource path="res://src/scripts/AStar-Pathfinding.gd" type="Script" id=5]
 [ext_resource path="res://assets/textures/tiles/Floor_Timber.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/tiles/Floor_BluckBoster_Carpet.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/tiles/Floor_Tile_Brickbond.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/obstacles/Walls_Box.png" type="Texture" id=9]
+[ext_resource path="res://src/default_env.tres" type="Environment" id=10]
 [ext_resource path="res://src/scenes/Enemies/EnemyPistol.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/scripts/GameManager.gd" type="Script" id=12]
 [ext_resource path="res://src/scenes/entities/VHS/VHS_Item.tscn" type="PackedScene" id=13]
-
 
 [sub_resource type="TileSet" id=1]
 0/name = "Floor_Timber.png 0"
@@ -77,9 +78,120 @@ extents = Vector2( 142.552, 145.379 )
 [node name="PlayerPlayground" type="Node"]
 script = ExtResource( 12 )
 
-[node name="WorldEnvironment" parent="." instance=ExtResource( 3 )]
+[node name="Background" type="Node2D" parent="."]
+position = Vector2( 0, 1000 )
 
-[node name="Floor" type="TileMap" parent="."]
+[node name="UI_BG" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG2" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 2580, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG5" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 7740, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG3" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 5160, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG4" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 10320, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG6" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 12900, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG7" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 15480, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG8" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 0, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG15" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( -2580, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG16" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( -2580, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG9" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 2580, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG10" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 7740, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG11" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 5160, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG12" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 10320, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG13" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 12900, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG14" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 15480, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG17" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 18060, 0 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="UI_BG18" type="Sprite" parent="Background"]
+material = ExtResource( 4 )
+position = Vector2( 18060, 7200 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 10 )
+
+[node name="FrontFloor" type="TileMap" parent="."]
 modulate = Color( 0.509804, 0.635294, 0.917647, 1 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 500, 500 )

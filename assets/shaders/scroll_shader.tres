@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://assets/shaders/scroll_shader.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/invert_x = true
+shader_param/invert_y = true
+shader_param/x_scroll_speed = 0.2
+shader_param/y_scroll_speed = 0.1
