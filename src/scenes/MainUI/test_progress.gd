@@ -15,7 +15,7 @@ export(bool) var full = false
 
 func _process(delta):
 	var prog = 1.0 - progress if full else progress
-	var scale = lerp(0.5, 3.0, prog)
+	var scale = lerp(0.5, 1.0, prog)
 	rect_scale.x = scale
 	rect_scale.y = scale
 
