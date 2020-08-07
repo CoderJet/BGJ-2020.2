@@ -1,9 +1,7 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/scenes/entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/tiles/Floor_Carpet_Funk.png" type="Texture" id=2]
-[ext_resource path="res://src/scripts/entities/Enemy.gd" type="Script" id=3]
-[ext_resource path="res://src/scripts/state-machines/EnemyStateMachine.gd" type="Script" id=4]
 [ext_resource path="res://src/scripts/AStar-Pathfinding.gd" type="Script" id=5]
 [ext_resource path="res://assets/textures/tiles/Floor_Timber.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/tiles/Floor_BluckBoster_Carpet.png" type="Texture" id=7]
@@ -75,10 +73,7 @@
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 142.552, 145.379 )
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 157.766, 153.327 )
-
-[node name="PlayerPlayground" type="Node2D"]
+[node name="PlayerPlayground" type="Node"]
 script = ExtResource( 12 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -86,7 +81,6 @@ environment = ExtResource( 10 )
 
 [node name="Floor" type="TileMap" parent="."]
 modulate = Color( 0.509804, 0.635294, 0.917647, 1 )
-scale = Vector2( 0.5, 0.5 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 500, 500 )
 format = 1
@@ -114,26 +108,9 @@ texture = ExtResource( 9 )
 position = Vector2( 10.7026, 1.18921 )
 shape = SubResource( 2 )
 
-[node name="Enemy" type="KinematicBody2D" parent="Node"]
-position = Vector2( 4496, 1768 )
-collision_layer = 4
-script = ExtResource( 3 )
-speed = 500.0
-polygon_path = NodePath("../../Polygon2D")
-
-[node name="StateMachine" type="Node" parent="Node/Enemy"]
-script = ExtResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="Node/Enemy"]
-modulate = Color( 1, 0, 0, 1 )
-texture = ExtResource( 9 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/Enemy"]
-position = Vector2( 8.3252, 0 )
-shape = SubResource( 3 )
-
 [node name="Enemy2" parent="Node" instance=ExtResource( 11 )]
 position = Vector2( 7751.2, 4047.67 )
+collision_mask = 3
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")
@@ -141,6 +118,7 @@ polygon_start_point = 2
 
 [node name="Enemy3" parent="Node" instance=ExtResource( 11 )]
 position = Vector2( 5369.9, 1599.03 )
+collision_mask = 3
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")
@@ -150,8 +128,6 @@ polygon_path = NodePath("../../Polygon2D")
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 576, 2498.85 )
 collision_mask = 6
-speed = 2500.0
-smoothing = 0.5
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2( 6250.7, 1366.88 )
@@ -161,9 +137,9 @@ polygon = PoolVector2Array( -553.536, -444.963, 2046.94, -439.854, 2036.86, 2232
 
 [node name="Tapes" type="Node" parent="."]
 
-[node name="VHS" parent="Tapes" instance=ExtResource( 13 )]
+[node name="Pistol" parent="Tapes" instance=ExtResource( 13 )]
 position = Vector2( 1577.31, 2153.98 )
 
-[node name="VHS2" parent="Tapes" instance=ExtResource( 13 )]
+[node name="SMG" parent="Tapes" instance=ExtResource( 13 )]
 position = Vector2( 1584.45, 2862.75 )
 tape_type = 1

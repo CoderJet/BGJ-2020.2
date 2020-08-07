@@ -32,8 +32,10 @@ func take_damage(damage : int) -> void:
 	if health <= 0:
 		queue_free()
 
-func _body_entered(other : KinematicBody2D) -> void:
-	if other and other.has_method("is_player") and other.name == "Player":
+func _body_entered(other : PhysicsBody2D) -> void:
+	print("%s : %s" % [other.name, other.collision_layer])
+	if other && other.collision_layer == 2:
+		queue_free()
 		if ![$StateMachine.states.chasing, $StateMachine.states.shoot].has($StateMachine.state):
 			# Do a raycast and make sure that we hit the player.
 			$StateMachine.state = $StateMachine.states.chasing
