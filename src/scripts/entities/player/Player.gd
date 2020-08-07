@@ -55,7 +55,6 @@ func play_running() -> void:
 func is_player() -> bool:
 	return true
 
-
 func requires_reloading() -> bool:
 	return current_gun.magazine_size < current_gun.max_magazine_size
 
@@ -127,6 +126,13 @@ func handle_movement(delta : float) -> void:
 	move_and_slide(velocity * new_speed, FLOOR_NORMAL)
 	_handle_legs()
 
+func take_damage(damage : int) -> void:
+	if dashing:
+		return
+	
+	.take_damage(damage)
+	if health <= 0:
+		$"/root/Control/ViewportContainer/Viewport".reload_level()
 
 func handle_weapon()-> void:
 	if !current_gun:
@@ -225,6 +231,7 @@ func _handle_legs() -> void:
 
 ## Godot functions
 func _ready() -> void:
+	is_player = true
 	play_idle()
 
 func _process(delta: float) -> void:

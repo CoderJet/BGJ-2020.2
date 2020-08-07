@@ -13,17 +13,29 @@ func _ready() -> void:
 	add_state("searching")
 	call_deferred("set_state", states.idle)
 
+export(float) var gun_distance = 2000
+export(float) var shoot_recoil_time = 1.0
+export(float) var walk_speed = 2000
+export(float) var hit_chance = 0.8
+export(int) var damage = 1
+
 var wait_time = 5
 var next_time = 0
 
-var shoot_time = 0.4
+var shoot_time = 1.0
 var next_time_shoot = 0
 ## State machine logic
 func _state_logic(delta : float) -> void:
+	if player and player.health <= 0:
+		return
+		
+	# We're dead.
+	if [states.die].has(state):
+		return
+	
 	if [states.chasing].has(state):
 		parent._move_to(player.position)
-		if player.position.distance_to(parent.position) < 2000:
-			print ("I'm near you!")
+		if player.position.distance_to(parent.position) < gun_distance:
 			state = states.shoot
 		pass
 
@@ -31,22 +43,18 @@ func _state_logic(delta : float) -> void:
 		#parent.rotation = (parent.rotation + (player.position.angle() * 0.1))
 		#parent.rotation = lerp(parent.rotation, PI + parent.position.angle_to_point(player.position), delta)
 		#parent.interpolate_property(parent.rotation)
-		Globals.SmoothLookAt(parent, player.position, 0.2)
-#		var angle = rad2deg(parent.position.angle_to_point(player.position))
-#		print(angle)
-#		if angle < 0:
-#			parent.rotation_degrees += 1
-#			#parent.rotate( deg2rad( AngularLookAt( parent.global_position, parent.global_rotation, player.position, 1 ) ) )
-#		elif angle > 0:
-#			parent.rotation_degrees -= 1
-#		else:
-#			pass
+		Globals.SmoothLookAt(parent, player.position, 0.4)
 
 		if next_time_shoot <= 0:
+			if (parent.position.distance_to(player.position)) > gun_distance:
+				state = states.chasing
+				return
+			
 			next_time_shoot = shoot_time
+			parent.set_flash()
 			var other = parent._hit_scan()
 			if other and other.has_method("is_player"):
-				other.take_damage(1)
+				other.take_damage(damage)
 				pass
 		else:
 			next_time_shoot -= delta
