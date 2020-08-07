@@ -6,7 +6,6 @@
 [ext_resource path="res://src/scenes/PlayerPlayground.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/music/VCR Music_main loop01.wav" type="AudioStream" id=5]
 
-
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
