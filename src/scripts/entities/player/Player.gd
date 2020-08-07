@@ -4,12 +4,12 @@ extends Entity
 signal hit_point(location)
 signal eject_tape(tape_type)
 
-export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
-#export (float) var cooldown_frames = 0
+#export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
 export (float) var weapon_range = 2000
 
 onready var hit_scan 		: RayCast2D			= get_node("Body/RayCast2D")
 onready var legs 			: AnimatedSprite 	= get_node("Legs")
+onready var torso 			: AnimatedSprite 	= get_node("Body/Torso")
 onready var tween 			: Tween 			= get_node("Tween")
 onready var shot_delay 		: Timer 			= get_node("ShotDelay")
 onready var reload_delay 	: Timer 			= get_node("ReloadDelay")
@@ -26,12 +26,18 @@ var reloading : bool = false
 ## Public
 ## Animation
 func play_idle() -> void:
-	if legs.animation != "idle":
-		legs.play("idle")
+	if current_gun:
+		torso.play("idle")
+	else:
+		torso.play("gunless")
+	legs.play("idle")
 
 func play_running() -> void:
-	if legs.animation != "running":
-		legs.play("running")
+	if current_gun:
+		torso.play("idle")
+	else:
+		torso.play("gunless")
+	legs.play("running")
 
 ## Handlers
 ## Checks
@@ -92,6 +98,7 @@ func handle_weapon()-> void:
 
 			var pos = Vector2.ZERO
 			hit_scan.cast_to = Vector2(weapon_range + diff_y, diff_x)
+
 			if hit_scan.is_colliding():
 				if hit_scan.get_collider().has_method("take_damage"):
 					hit_scan.get_collider().take_damage(current_gun.gun_damage)
@@ -148,14 +155,9 @@ func _handle_legs() -> void:
 func _ready() -> void:
 	play_idle()
 
-
 func _process(delta: float) -> void:
 	## Rotate the torso inline with the mouse position
 	look_at(get_global_mouse_position())
-	#mouse_pos = get_global_mouse_position()
-	# Interpret the value in degrees, so we can work with them easier.
-	#var torso_value = fmod(rad2deg(rotation + (mouse_pos.angle() * smoothing)), 360)
-	#rotation_degrees = torso_value
 
 	if flash == true:
 		if flash_frames == 0:

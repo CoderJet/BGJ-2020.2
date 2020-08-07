@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/textures/objects/Pickup.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/square.png" type="Texture" id=3]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 194.648
 
@@ -12,6 +11,8 @@ radius = 194.648
 extents = Vector2( 40, 24 )
 
 [node name="VHS" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 7
 gravity_scale = 0.0
 linear_damp = 1.0
 angular_damp = 5.0

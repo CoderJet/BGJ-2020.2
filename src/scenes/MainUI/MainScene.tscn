@@ -6,20 +6,24 @@
 [ext_resource path="res://src/scenes/PlayerPlayground.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/music/VCR Music_main loop01.wav" type="AudioStream" id=5]
 
-
 [node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -640.0
+margin_top = -360.0
+margin_right = 640.0
+margin_bottom = 360.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-margin_left = 385.0
-margin_top = 28.0
-margin_right = 1234.0
-margin_bottom = 676.0
-stretch = true
+margin_left = 376.0
+margin_top = 40.0
+margin_right = 1225.0
+margin_bottom = 688.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -27,11 +31,11 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 849, 648 )
 handle_input_locally = false
+usage = 0
+render_direct_to_screen = true
 render_target_update_mode = 3
 
-[node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
-
-[node name="PlayerPlayground" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
+[node name="Level" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -47,6 +51,7 @@ __meta__ = {
 }
 
 [node name="ScanLineEffect" type="TextureRect" parent="."]
+visible = false
 material = ExtResource( 2 )
 margin_left = 385.0
 margin_top = 28.0
@@ -80,6 +85,7 @@ __meta__ = {
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
+visible = false
 position = Vector2( 640, 360 )
 stream = ExtResource( 5 )
 volume_db = -8.0

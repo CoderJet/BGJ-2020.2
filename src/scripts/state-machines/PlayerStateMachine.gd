@@ -9,13 +9,14 @@ func _ready() -> void:
 
 ## State machine logic
 func _state_logic(delta : float) -> void:
+	if state != states.die:
+		parent.handle_movement(delta)
+
 	if [states.idle, states.run].has(state):
-		parent.handle_movement(delta)
 		parent.handle_weapon()
-	elif state == states.reload:
+
+	if state == states.reload:
 		parent.rewind_tape()
-		parent.handle_movement(delta)
-		pass
 
 
 func _get_transition(delta : float):

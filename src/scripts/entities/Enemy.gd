@@ -16,7 +16,7 @@ func _ready():
 		destinations = get_node(polygon_path).polygon
 		for i in range(destinations.size()):
 			destinations[i] += get_node(polygon_path).position
-			
+
 	if polygon_start_point > destinations.size():
 		polygon_start_point = 0
 	dest_idx = polygon_start_point
