@@ -4,6 +4,7 @@ extends TileMap
 onready var astar_node = AStar.new()
 # The Tilemap node doesn't have clear bounds so we're defining the map's limits here
 export(Vector2) var map_size = Vector2(16, 16)
+export (NodePath) var obstacle_tilemap
 
 # The path start and end variables use setter methods
 # You can find them at the bottom of the script
@@ -17,11 +18,11 @@ const DRAW_COLOR = Color('#fff')
 
 # get_used_cells_by_id is a method from the TileMap node
 # here the id 0 corresponds to the grey tile, the obstacles
-onready var obstacles = get_used_cells_by_id(0)
+onready var obstacles = get_used_cells_by_id(22)
 onready var _half_cell_size = cell_size / 2
 
 func _ready():
-	var used_rect = get_node("../Floor").get_used_rect()
+	var used_rect = get_node("../FrontFloor").get_used_rect()
 	map_size = Vector2(used_rect.size)
 	var walkable_cells_list = astar_add_walkable_cells(obstacles)
 	astar_connect_walkable_cells_diagonal(walkable_cells_list)

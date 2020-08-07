@@ -70,6 +70,7 @@ _global_script_class_icons={
 
 config/name="BGJ-2020.2"
 run/main_scene="res://src/scenes/MainUI/MainScene.tscn"
+boot_splash/bg_color=Color( 0.470588, 0.0196078, 0.0196078, 1 )
 config/icon="res://assets/icons/icon.png"
 
 [audio]
@@ -137,6 +138,10 @@ interact={
 2d_physics/layer_2="object"
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="gun"
+
+[physics]
+
+common/physics_fps=120
 
 [rendering]
 

@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/scripts/entities/player/VCR-Item.gd" type="Script" id=1]
-[ext_resource path="res://assets/textures/objects/Pickup.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/obstacles/Pickup.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/square.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 194.648
+radius = 256.125
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 40, 24 )
@@ -19,12 +19,13 @@ angular_damp = 5.0
 script = ExtResource( 1 )
 
 [node name="TapeBackground" type="Sprite" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 0.0437927, 1.82588 )
-scale = Vector2( 5.24817, 2.99426 )
+modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
+position = Vector2( 0, 4 )
+scale = Vector2( 10, 5.5 )
 texture = ExtResource( 3 )
 
 [node name="TapeForeground" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="VHS-Zone" type="Area2D" parent="."]

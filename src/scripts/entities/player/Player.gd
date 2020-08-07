@@ -123,18 +123,18 @@ func handle_weapon()-> void:
 func rewind_start() -> void:
 	reloading = true
 	emit_signal("rewind_started")
-	
+
 func rewind_stop() -> void:
 	reloading = false
 	emit_signal("rewind_stopped")
-	
+
 func rewind_tape() -> void:
 	if reload_delay.is_stopped():
 		if !is_magazine_full():
-			
+
 			var prog = float(current_gun.magazine_size)/float(current_gun.max_magazine_size)
 			var new_prog = float(current_gun.magazine_size+1)/float(current_gun.max_magazine_size)
-			
+
 			emit_signal("rewind_bullet", prog, new_prog)
 			current_gun.magazine_size += 1
 			reload_delay.start()

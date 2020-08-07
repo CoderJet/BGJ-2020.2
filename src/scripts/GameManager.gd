@@ -6,8 +6,10 @@ signal mouse_pos(mouse_pos)
 
 func _ready() -> void:
 	$Player.connect("eject_tape", self, "eject_tape")
-	Globals._play_song("VCR Music_mainLoop02.ogg", -15)
-	get_node("/root/Control/UI/UI_GUN").unload_gun()
+	#Globals._play_song("VCR Music_mainLoop02.ogg", -15)
+
+	if get_node("/root/Control/UI/UI_GUN"):
+		get_node("/root/Control/UI/UI_GUN").unload_gun()
 
 	self.connect("tape_pickuped", $Player, "tape_pickuped")
 	self.connect("tape_pickuped", get_node("/root/Control/UI/UI_GUN"), "tape_pickuped")
