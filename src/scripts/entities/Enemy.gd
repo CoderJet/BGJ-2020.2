@@ -63,6 +63,7 @@ func _move_to(world_position):
 	var MASS = 2.0
 	var ARRIVE_DISTANCE = 10.0
 
+	print(speed)
 	var desired_velocity = (world_position - position).normalized() * speed
 	var steering = desired_velocity - velocity
 	velocity += steering / MASS

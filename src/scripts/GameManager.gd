@@ -18,6 +18,7 @@ func _ready() -> void:
 	$Player.connect("rewind_bullet", gun_node, "lerp_prog")
 	$Player.connect("rewind_started", get_node("/root/Control/UI"), "_start_rewind")
 	$Player.connect("rewind_stopped", get_node("/root/Control/UI"), "_stop_rewind")
+	$Player.connect("damage_taken", get_node("/root/Control/UI"), "_took_damage")
 	self.connect("mouse_pos", $Player, "mouse_pos")
 
 	for child in get_node("Tapes").get_children():

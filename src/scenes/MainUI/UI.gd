@@ -17,3 +17,6 @@ func _start_rewind():
 func _stop_rewind():
 	$ScanLineEffect.material.set_shader_param("lines", false)
 	$UI_REWINDER.frame = 2
+
+func _took_damage(health : int):
+	$UI_SHAMEBOY/UI_HEALTH_000.frame-=1

@@ -153,6 +153,7 @@ __meta__ = {
 [node name="UI_HEALTH_000" type="AnimatedSprite" parent="UI/UI_SHAMEBOY"]
 position = Vector2( 424.421, 298.321 )
 frames = SubResource( 1 )
+frame = 4
 
 [node name="UI_REWINDER" type="AnimatedSprite" parent="UI"]
 position = Vector2( 194.178, 361.378 )
