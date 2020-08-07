@@ -26,3 +26,6 @@ shader_param/lower_bound = 0.23
 shader_param/upper_bound = 0.56
 shader_param/num_lines = 8
 shader_param/angle = 8.0
+shader_param/line_speed_inner = 2.0
+shader_param/line_speed_sin = 0.6
+shader_param/line_speed_overall = 3.0

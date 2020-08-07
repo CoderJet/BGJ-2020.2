@@ -18,7 +18,6 @@ func _state_logic(delta : float) -> void:
 	if state == states.reload:
 		parent.rewind_tape()
 
-
 func _get_transition(delta : float):
 	# Move between states: run -> reloading
 	match state:
@@ -40,7 +39,6 @@ func _get_transition(delta : float):
 			pass
 	return null
 
-
 func _enter_state(new_state, old_state) -> void:
 	# Handle animations
 	match state:
@@ -50,11 +48,11 @@ func _enter_state(new_state, old_state) -> void:
 			parent.play_running()
 		states.reload:
 			print("*Rewind sounds*")
+			Globals._play_clip("VCR SFX_ReloadLong.wav")
 			# Throwup rewind shader?
 			pass
 		states.die:
 			pass
-
 
 func _exit_state(old_sate, new_state) -> void:
 	# Handle animations
@@ -75,8 +73,9 @@ func _input(event: InputEvent) -> void:
 			parent.eject()
 		if parent.current_gun && parent.requires_reloading():
 			if event.is_action_pressed("reload"):
-				parent.reloading = true
+				parent.rewind_start()
 	elif state == states.reload:
 		if event.is_action_pressed("eject") || event.is_action_pressed("fire") || parent.is_magazine_full():
 			print("Rewind stopped")
-			parent.reloading = false
+			Globals._stop_clip("VCR SFX_ReloadLong.wav")
+			parent.rewind_stop()

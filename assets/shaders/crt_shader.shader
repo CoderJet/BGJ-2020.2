@@ -76,9 +76,12 @@ float ramp(float y, float start, float end) {
 	
 }
 
+uniform float line_speed_inner : hint_range(0.5, 3.0, 0.1) = float(2.0);
+uniform float line_speed_sin : hint_range(0.5, 3.0, 0.1) = float(1.5);
+uniform float line_speed_overall : hint_range(0.1, 4.0, 0.1) = float(2.0);
 float DrawStripes(sampler2D tex, in float time, vec2 uv) {
 	float noi = noise(uv*vec2(0.5, 1.0) + vec2(1.0, 3.0), tex, time);
-	return ramp(mod(uv.x*angle - uv.y*float(num_lines) + time/2.+sin(time + sin(time*0.63)),1.0),lower_bound,upper_bound)*noi;
+	return ramp(mod(uv.x*angle - uv.y*float(num_lines) + (time*line_speed_inner + sin(time)*line_speed_sin)*line_speed_overall,1.0),lower_bound,upper_bound)*noi;
 }
 
 void DrawVignette(inout vec3 color, vec2 uv) {
@@ -135,11 +138,11 @@ void fragment() {
 		color = vec3(0.0, 0.0, 0.0);
 	}
 	
-	DrawVignette(color, crtUV);
-	DrawScanline(color, crtUV, TIME * scanlines_speed);
 	if (lines) {
 		color += lines_strength*DrawStripes(SCREEN_TEXTURE, TIME, SCREEN_UV);
-	}
+	}	
+	DrawVignette(color, crtUV);
+	DrawScanline(color, crtUV, TIME * scanlines_speed);
 	
 	COLOR = vec4(color, 1);
 }

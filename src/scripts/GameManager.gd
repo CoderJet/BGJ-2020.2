@@ -6,8 +6,15 @@ signal mouse_pos(mouse_pos)
 
 func _ready() -> void:
 	$Player.connect("eject_tape", self, "eject_tape")
+	Globals._play_song("VCR Music_mainLoop02.ogg", -15)
+	get_node("/root/Control/UI/UI_GUN").unload_gun()
 
 	self.connect("tape_pickuped", $Player, "tape_pickuped")
+	self.connect("tape_pickuped", get_node("/root/Control/UI/UI_GUN"), "tape_pickuped")
+	$Player.connect("eject_tape", get_node("/root/Control/UI/UI_GUN"), "tape_ejected")
+	$Player.connect("rewind_bullet", get_node("/root/Control/UI/UI_GUN"), "lerp_prog")
+	$Player.connect("rewind_started", get_node("/root/Control/UI"), "_start_rewind")
+	$Player.connect("rewind_stopped", get_node("/root/Control/UI"), "_stop_rewind")
 	self.connect("mouse_pos", $Player, "mouse_pos")
 
 	for child in get_node("Tapes").get_children():
@@ -20,6 +27,7 @@ func tape_pickuped(tape_type) -> void:
 		if child is VHS_Item:
 			if child.vhs_gun.tape_type == tape_type.tape_type:
 				if $Player.current_gun == null:
+					Globals._play_clip("VCR SFX_WeaponPickup.wav")
 					get_node("Tapes").remove_child(child)
 					emit_signal("tape_pickuped", tape_type)
 

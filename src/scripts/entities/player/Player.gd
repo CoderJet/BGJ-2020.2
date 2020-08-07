@@ -3,6 +3,9 @@ extends Entity
 
 signal hit_point(location)
 signal eject_tape(tape_type)
+signal rewind_bullet(prog, new_prog)
+signal rewind_started()
+signal rewind_stopped()
 
 #export (float, 0.05, 1.0, 0.05) var smoothing : float = 0.1
 export (float) var weapon_range = 2000
@@ -55,6 +58,8 @@ func is_magazine_full() -> bool:
 ## Player functionality
 func eject() -> void:
 	emit_signal("eject_tape", current_gun)
+	if current_gun:
+		Globals._play_clip("VCR SFX_HeadThrow.wav")
 	current_gun = null
 
 
@@ -93,6 +98,7 @@ func handle_weapon()-> void:
 
 	if Input.is_action_pressed("fire"):
 		if shot_delay.is_stopped() && current_gun.magazine_size != 0:
+			Globals._play_clip(current_gun.audio_clip)
 			var diff_x = rand_range(current_gun.spray_x.x, current_gun.spray_x.y)
 			var diff_y = rand_range(current_gun.spray_y.x, current_gun.spray_y.y)
 
@@ -107,16 +113,34 @@ func handle_weapon()-> void:
 				_create_impact(pos)
 
 			_handle_gun_flash(pos, diff_x, diff_y)
+			var prog = float(current_gun.magazine_size) / float(current_gun.max_magazine_size)
+			var prog_new = float(current_gun.magazine_size-1) / float(current_gun.max_magazine_size)
+			emit_signal("rewind_bullet", prog, prog_new)
 
 			current_gun.magazine_size -= 1
 			shot_delay.start()
 
-
+func rewind_start() -> void:
+	reloading = true
+	emit_signal("rewind_started")
+	
+func rewind_stop() -> void:
+	reloading = false
+	emit_signal("rewind_stopped")
+	
 func rewind_tape() -> void:
 	if reload_delay.is_stopped():
 		if !is_magazine_full():
+			
+			var prog = float(current_gun.magazine_size)/float(current_gun.max_magazine_size)
+			var new_prog = float(current_gun.magazine_size+1)/float(current_gun.max_magazine_size)
+			
+			emit_signal("rewind_bullet", prog, new_prog)
 			current_gun.magazine_size += 1
 			reload_delay.start()
+		else:
+			rewind_stop()
+			Globals._stop_clip("VCR SFX_ReloadLong.wav")
 
 ## Private
 func _create_impact(pos : Vector2) -> void:

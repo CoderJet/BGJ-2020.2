@@ -110,7 +110,6 @@ shape = SubResource( 2 )
 
 [node name="Enemy2" parent="Node" instance=ExtResource( 11 )]
 position = Vector2( 7751.2, 4047.67 )
-collision_mask = 3
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")
@@ -118,7 +117,6 @@ polygon_start_point = 2
 
 [node name="Enemy3" parent="Node" instance=ExtResource( 11 )]
 position = Vector2( 5369.9, 1599.03 )
-collision_mask = 3
 speed = 2000.0
 max_health = 50
 polygon_path = NodePath("../../Polygon2D")

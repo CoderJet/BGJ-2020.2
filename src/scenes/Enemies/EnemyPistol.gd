@@ -25,12 +25,8 @@ func _process(delta):
 		modulate = Color("ffffff")
 
 func take_damage(damage : int) -> void:
-	health -=  damage
-
 	cur_frames = color_mod_frames
-
-	if health <= 0:
-		queue_free()
+	.take_damage(damage)
 
 func _body_entered(other : PhysicsBody2D) -> void:
 	print("%s : %s" % [other.name, other.collision_layer])

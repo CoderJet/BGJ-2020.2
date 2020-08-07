@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/VCR_Music_Mall_remix_NO_FILTER.ogg-8af7440b5a3f7c3bd09fc461789c9570.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/music/VCR_Music_Mall_remix_NO_FILTER.ogg"
+dest_files=[ "res://.import/VCR_Music_Mall_remix_NO_FILTER.ogg-8af7440b5a3f7c3bd09fc461789c9570.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

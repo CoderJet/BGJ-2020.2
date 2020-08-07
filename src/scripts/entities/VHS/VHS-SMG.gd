@@ -9,3 +9,4 @@ func _init() -> void:
 	self.magazine_size = self.max_magazine_size
 	self.shot_delay = 0.05
 	self.reload_delay = 0.15
+	self.audio_clip = "VCR SFX_Fire_SMG.wav"

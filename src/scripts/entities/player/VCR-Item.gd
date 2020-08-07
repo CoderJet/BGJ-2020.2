@@ -44,5 +44,4 @@ func _on_body_exited(body: Node) -> void:
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action_pressed("interact") && collectable:
-		print("Test")
 		emit_signal("tape_pickuped", vhs_gun)

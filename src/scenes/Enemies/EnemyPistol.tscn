@@ -11,6 +11,8 @@ extents = Vector2( 119.729, 135.169 )
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 1 )
+take_damage_sfx = "VCR SFX_EnemyHit.wav"
+dead_sfx = "VCR SFX_EnemyDead.wav"
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 2 )
