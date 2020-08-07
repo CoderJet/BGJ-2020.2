@@ -9,7 +9,8 @@ func _ready() -> void:
 	$Player.connect("eject_tape", self, "eject_tape")
 	Globals._play_song("VCR Music_mainLoop02.ogg", -15)
 	var gun_node = get_node("/root/Control/UI/Gun")
-	gun_node.unload_gun()
+	if gun_node:
+		gun_node.unload_gun()
 
 	self.connect("tape_pickuped", $Player, "tape_pickuped")
 	self.connect("tape_pickuped", gun_node, "tape_pickuped")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/scenes/WorldEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/tilesets/MasterTileset.tres" type="TileSet" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://src/scenes/obstacles/CardboardBox.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/scenes/obstacles/ShelvingUnit.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/scenes/entities/VHS/VHS_Item.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/textures/obstacles/Decal_SALE.png" type="Texture" id=12]
 
 [node name="VHS Store" type="Node"]
 script = ExtResource( 5 )
@@ -60,6 +61,12 @@ script = ExtResource( 3 )
 obstacle_tilemap = NodePath("../Terrain/Walls")
 
 [node name="Environment" type="Node" parent="."]
+
+[node name="Decal_SALE" type="Sprite" parent="Environment"]
+position = Vector2( 7509.78, 4509.64 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 12 )
 
 [node name="CashierCounter" parent="Environment" instance=ExtResource( 6 )]
 position = Vector2( 1511.42, 6434.23 )
