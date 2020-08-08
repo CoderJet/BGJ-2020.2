@@ -7,14 +7,21 @@ extends Viewport
 var cur_level = null
 var cur_level_str = ""
 var scenes = {}
+var scene_music = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	scenes["Scene1"] = load("res://src/scenes/PlayerPlayground.tscn")
-	scenes["Scene2"] = load("res://src/scenes/Scene1-VHSStore/Level-TheStreets.tscn")
-	scenes["Scene3"] = load("res://src/scenes/Scene1-VHSStore/Scene1-VHSStore.tscn")
+	scenes["Play"] = load("res://src/scenes/PlayerPlayground.tscn")
+	scenes["Scene1"] = load("res://src/scenes/Scene1-VHSStore/Scene1-VHSStore.tscn")
+	scenes["Scene2"] = load("res://src/scenes/Scene1-VHSStore/Scene2-TheMall.tscn")
+	scenes["Scene3"] = load("res://src/scenes/Scene1-VHSStore/Level-TheStreets.tscn")
 
-	load_level("Scene1")
+	#scene_music["Scene1"] = { "name": "VCR Music_mainLoop02.ogg", "volume": 5, "mixer": "Master" }
+	scene_music["Scene1"] = { "name": "VCR_Music_Mall_remix_NO_FILTER.ogg", "volume": 0, "mixer": "Master" }
+	scene_music["Scene2"] = { "name": "VCR_Music_Mall_remix_NO_FILTER.ogg", "volume": 5, "mixer": "Mallsoft" }
+	scene_music["Scene3"] = { "name": "", "volume": 5, "mixer": "Master" }
+
+	load_level("Play")
 
 func reload_level() -> void:
 	if cur_level:
@@ -36,3 +43,6 @@ func load_level(scene : String) -> void:
 		cur_level = instance
 		cur_level_str = scene
 		add_child(instance)
+		
+		if (scene_music.has(scene)):
+			Globals._play_song(scene_music[scene]["name"], scene_music[scene]["volume"], scene_music[scene]["mixer"])

@@ -22,7 +22,9 @@ onready var obstacles = get_used_cells_by_id(22)
 onready var _half_cell_size = cell_size / 2
 
 func _ready():
-	var used_rect = get_node("../FrontFloor").get_used_rect()
+	var _floor = get_node("../FrontFloor")
+	print(_floor)
+	var used_rect = _floor.get_used_rect()
 	map_size = Vector2(used_rect.size)
 	var walkable_cells_list = astar_add_walkable_cells(obstacles)
 	astar_connect_walkable_cells_diagonal(walkable_cells_list)

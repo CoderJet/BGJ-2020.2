@@ -25,6 +25,7 @@ func _play_song(song_name : String, vol : float = -5, bus : String = "Master") -
 		return	
 	
 	player.stream = audio
+	player.bus = bus
 	player.play()
 
 func _play_clip(sfx_name : String, bus : String = "Master") -> void:

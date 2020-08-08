@@ -46,6 +46,7 @@ tile_data = PoolIntArray( 0, 23, 0, 1, -1610612714, 0, 2, -1610612714, 0, 3, -16
 cell_size = Vector2( 500, 500 )
 format = 1
 script = ExtResource( 2 )
+obstacle_tilemap = NodePath("../Walls")
 
 [node name="Envrionment" type="Node" parent="."]
 
@@ -122,7 +123,15 @@ rotation = -1.5708
 position = Vector2( 4638.32, 1484.87 )
 
 [node name="Trashcan2" parent="Envrionment/Trash" instance=ExtResource( 6 )]
-position = Vector2( 8370.53, 1484.87 )
+position = Vector2( 8433.39, 2014.67 )
+
+[node name="Trashcan4" parent="Envrionment/Trash" instance=ExtResource( 6 )]
+position = Vector2( 8433.39, 6003.18 )
+rotation = -3.09553
+
+[node name="Trashcan3" parent="Envrionment/Trash" instance=ExtResource( 6 )]
+position = Vector2( 4706.52, 6045.89 )
+rotation = 0.645292
 
 [node name="Plants" type="Node" parent="Envrionment"]
 

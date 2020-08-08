@@ -1,28 +1,48 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/scenes/Enemies/EnemyPistol.gd" type="Script" id=1]
 [ext_resource path="res://src/scenes/Enemies/StateMachinePistol.gd" type="Script" id=2]
-[ext_resource path="res://src/scenes/Enemies/EnemyPistolSpriteSheet.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://assets/textures/muzzle_flash_pistol.png" type="Texture" id=5]
+[ext_resource path="res://assets/textures/enemy/EnemyLaser.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/enemy/EnemyLaserFlash.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/enemy/Enemy_Laser_Down.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/smoke.png" type="Texture" id=7]
+[ext_resource path="res://assets/textures/muzzle_flash.png" type="Texture" id=8]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "die",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve" id=9]
+min_value = 1.0
+max_value = 5.0
+_data = [ Vector2( 0, 5 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 119.729, 135.169 )
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0, 0.00740741, 0.651852, 1 )
 colors = PoolColorArray( 0, 0, 0, 0.54902, 0.105469, 0.105469, 0.105469, 1, 0.423529, 0.423529, 0.423529, 0.748031, 0.423529, 0.423529, 0.423529, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.315909 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 1
 emission_sphere_radius = 100.0
 flag_disable_z = true
@@ -37,55 +57,58 @@ orbit_velocity_random = 0.0
 radial_accel = 10.0
 radial_accel_random = 1.0
 scale_random = 1.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 1 )
 speed = 1.0
-max_health = 5
 take_damage_sfx = "VCR SFX_EnemyHit.wav"
 dead_sfx = "VCR SFX_EnemyDead.wav"
+range_x = 600.0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 2 )
-gun_distance = 1500.0
-shoot_recoil_time = 1.0
-shoot_cooldown_time = 3.0
-num_shots_per_cooldown = 3
-walk_speed = 150.0
+gun_distance = 1800.0
+shoot_recoil_time = 0.1
+shoot_cooldown_time = 5.0
+num_shots_per_cooldown = 10
+walk_speed = 120.0
+hit_chance = 0.4
 
 [node name="Body" type="AnimatedSprite" parent="."]
 position = Vector2( 25.9659, 1.44463 )
-frames = ExtResource( 3 )
+frames = SubResource( 8 )
 
 [node name="Raycast" type="RayCast2D" parent="Body"]
-position = Vector2( 216.567, -1.09503 )
+position = Vector2( 207.517, 117.732 )
 enabled = true
 cast_to = Vector2( 2000, 0 )
 
 [node name="muzzle_flash" type="Sprite" parent="Body"]
 visible = false
-position = Vector2( 306.039, -0.501022 )
+position = Vector2( 393.446, 117.23 )
 rotation = 1.57079
-texture = ExtResource( 5 )
+texture = ExtResource( 8 )
 
 [node name="muzzle_flash_pistol2" type="Light2D" parent="Body/muzzle_flash"]
-texture = ExtResource( 5 )
+position = Vector2( -7.62939e-06, 1.18921 )
+texture = ExtResource( 8 )
 color = Color( 0.964706, 0.964706, 0.65098, 1 )
 
 [node name="HitScan" type="Line2D" parent="Body"]
 visible = false
-position = Vector2( 217.007, -1.27946 )
-points = PoolVector2Array( 0, 0, 100, 0 )
+position = Vector2( 206.784, 118.92 )
+points = PoolVector2Array( 0, 0, 1000, 0 )
 width = 5.0
-default_color = Color( 0.988235, 0.988235, 0.862745, 1 )
+width_curve = SubResource( 9 )
+default_color = Color( 0.666667, 0.6, 0.462745, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -8, -8 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -106,7 +129,7 @@ lifetime = 2.0
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
-process_material = SubResource( 6 )
+process_material = SubResource( 7 )
 texture = ExtResource( 7 )
 [connection signal="body_entered" from="Area2D" to="." method="_body_entered"]
 [connection signal="body_shape_entered" from="Area2D" to="." method="_on_Area2D_body_shape_entered"]
