@@ -129,7 +129,7 @@ func handle_movement(delta : float) -> void:
 func take_damage(damage : int) -> void:
 	if dashing:
 		return
-	
+
 	.take_damage(damage)
 	if health <= 0:
 		$"/root/Control/ViewportContainer/Viewport".reload_level()

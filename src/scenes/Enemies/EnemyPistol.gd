@@ -24,17 +24,17 @@ func set_flash():
 func _process(delta):
 	if modulate.a <= 0:
 		queue_free()
-		
+
 	if health <= 0:
 		return
-	
+
 	#._process(delta)
 	if (cur_frames > 0):
 		modulate = Color("ff0000")
 		cur_frames -= 1
 	else:
 		modulate = Color("ffffff")
-	
+
 	if flash == true:
 		if flash_frames == 0:
 			flash = false
@@ -67,7 +67,7 @@ func take_damage(damage : int) -> void:
 func _body_entered(other : PhysicsBody2D) -> void:
 	if $StateMachine.state == $StateMachine.states.die:
 		return
-	
+
 	if other && other.collision_layer == 1:
 		if ![$StateMachine.states.chasing, $StateMachine.states.shoot].has($StateMachine.state):
 			# Do a raycast and make sure that we hit the player.
