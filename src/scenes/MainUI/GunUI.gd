@@ -10,7 +10,7 @@ func load_gun(name : String, max_size : int, cur_size : int, background_image : 
 	$Full.progress = prog
 	$Empty.progress = prog
 	has_gun = true
-	
+
 func unload_gun():
 	$UI_GUN/BackgroundImage.texture = load("res://assets/UI/UI_WEAPON_NULL.png")
 	$Full.progress = 0

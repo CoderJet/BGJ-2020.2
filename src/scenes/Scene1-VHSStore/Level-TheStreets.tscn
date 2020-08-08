@@ -63,7 +63,7 @@ shape = SubResource( 1 )
 [node name="Tapes" type="Node" parent="."]
 
 [node name="Pistol" parent="Tapes" instance=ExtResource( 4 )]
-position = Vector2( 2321.84, 1878.79 )
+position = Vector2( 2536.09, 1626.93 )
 
 [node name="Particles" type="Node" parent="."]
 

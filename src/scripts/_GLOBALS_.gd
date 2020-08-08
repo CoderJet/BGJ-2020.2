@@ -13,24 +13,24 @@ func _ready():
 
 func _play_song(song_name : String, vol : float = -5, bus : String = "Master") -> void:
 	var path = "res://assets/audio/music/%s" % [song_name]
-	
+
 	if !player:
 		player = AudioStreamPlayer.new()
 		get_node("/root/Globals").add_child(player)
 		player.volume_db = vol
-	
+
 	var audio = load(path)
 	if !audio:
 		print("Resource ", path, " was unable to be loaded!")
-		return	
-	
+		return
+
 	player.stream = audio
 	player.bus = bus
 	player.play()
 
 func _play_clip(sfx_name : String, bus : String = "Master") -> void:
 	var path = "res://assets/audio/sfx/%s" % [sfx_name]
-	
+
 	var sfx_player = null
 	if sfx_players.has(sfx_name) == false:
 		sfx_player = AudioStreamPlayer.new()
@@ -38,12 +38,12 @@ func _play_clip(sfx_name : String, bus : String = "Master") -> void:
 		sfx_players[sfx_name] = sfx_player
 	else:
 		sfx_player = sfx_players[sfx_name]
-	
+
 	var audio = load(path)
 	if !audio:
 		print("Resource ", path, " was unable to be loaded!")
-		return	
-	
+		return
+
 	sfx_player.stream = audio
 	sfx_player.play()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/scenes/WorldEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/scripts/AStar-Pathfinding.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/textures/obstacles/Road_Mall_Parking_Icon.png" type="Texture" id=7]
 [ext_resource path="res://src/scenes/entities/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/scripts/GameManager.gd" type="Script" id=9]
+[ext_resource path="res://assets/textures/Exit.png" type="Texture" id=10]
 [ext_resource path="res://assets/textures/obstacles/Decal_CASSETTES.png" type="Texture" id=11]
 [ext_resource path="res://assets/textures/obstacles/Decal_FUNK.png" type="Texture" id=12]
 [ext_resource path="res://src/scenes/obstacles/NeonSignProjected.tscn" type="PackedScene" id=13]
@@ -16,6 +17,9 @@
 [ext_resource path="res://src/scenes/obstacles/Plant.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/scenes/obstacles/BasicStand.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/scenes/obstacles/PretzelStand.tscn" type="PackedScene" id=17]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 743.354, 96.2969 )
 
 [node name="The Mall" type="Node"]
 script = ExtResource( 9 )
@@ -125,14 +129,6 @@ position = Vector2( 4638.32, 1484.87 )
 [node name="Trashcan2" parent="Envrionment/Trash" instance=ExtResource( 6 )]
 position = Vector2( 8433.39, 2014.67 )
 
-[node name="Trashcan4" parent="Envrionment/Trash" instance=ExtResource( 6 )]
-position = Vector2( 8433.39, 6003.18 )
-rotation = -3.09553
-
-[node name="Trashcan3" parent="Envrionment/Trash" instance=ExtResource( 6 )]
-position = Vector2( 4706.52, 6045.89 )
-rotation = 0.645292
-
 [node name="Plants" type="Node" parent="Envrionment"]
 
 [node name="Plant" parent="Envrionment/Plants" instance=ExtResource( 15 )]
@@ -158,13 +154,23 @@ rotation = -0.785398
 position = Vector2( 15534.5, 2891.58 )
 rotation = -0.785398
 
+[node name="Exit" type="Sprite" parent="Envrionment"]
+position = Vector2( 33419.5, 4211.83 )
+rotation = 1.5708
+texture = ExtResource( 10 )
+
+[node name="Area2D" type="Area2D" parent="Envrionment/Exit"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envrionment/Exit/Area2D"]
+position = Vector2( 42.6533, -11.2227 )
+shape = SubResource( 1 )
+
 [node name="Tapes" type="Node" parent="."]
 
 [node name="Particles" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( 475.712, 4596.69 )
-collision_mask = 6
 
 [node name="Lights" type="Node" parent="."]
 
@@ -195,3 +201,4 @@ scale = Vector2( 5, 5 )
 position = Vector2( 18250.6, 12978.6 )
 rotation = 1.5708
 scale = Vector2( 5, 5 )
+[connection signal="body_entered" from="Envrionment/Exit/Area2D" to="." method="_on_exit"]

@@ -30,16 +30,17 @@ func _input(event: InputEvent) -> void:
 
 
 func set_destination() -> void:
-	dest_idx += 1
-	dest_idx = dest_idx % destinations.size()
+	if destinations:
+		dest_idx += 1
+		dest_idx = dest_idx % destinations.size()
 
-	path = get_node("../../AStar").find_path(position, destinations[dest_idx])
-	if not path or len(path) == 1:
-		return
-	path.remove(0)
-	# The index 0 is the starting cell
-	# we don't want the character to move back to it in this example
-	target_point_world = path[0]
+		path = get_node("../../Terrain/AStar").find_path(position, destinations[dest_idx])
+		if not path or len(path) == 1:
+			return
+		path.remove(0)
+		# The index 0 is the starting cell
+		# we don't want the character to move back to it in this example
+		target_point_world = path[0]
 
 
 func move_to_destination() -> bool:

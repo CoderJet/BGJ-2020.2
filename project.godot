@@ -70,8 +70,6 @@ _global_script_class_icons={
 
 config/name="BGJ-2020.2"
 run/main_scene="res://src/scenes/MainUI/MainScene.tscn"
-boot_splash/image="res://assets/key art/VCR Cover.jpg"
-boot_splash/bg_color=Color( 0.470588, 0.0196078, 0.0196078, 1 )
 config/icon="res://assets/icons/icon.png"
 
 [audio]

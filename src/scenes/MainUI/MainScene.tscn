@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/textures/Screen Mock.png" type="Texture" id=1]
 [ext_resource path="res://assets/shaders/crt_material.tres" type="Material" id=2]
@@ -25,6 +25,10 @@
 [ext_resource path="res://assets/UI/UI_WEAPON_NULL.png" type="Texture" id=23]
 [ext_resource path="res://assets/UI/UI_GUN_BG.png" type="Texture" id=24]
 [ext_resource path="res://assets/shaders/scroll_shader.tres" type="Material" id=25]
+[ext_resource path="res://assets/key art/SPLASH.png" type="Texture" id=26]
+[ext_resource path="res://assets/textures/START.png" type="Texture" id=27]
+[ext_resource path="res://assets/textures/UI_REWIND.png" type="Texture" id=28]
+[ext_resource path="res://assets/textures/UI_Control.png" type="Texture" id=29]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -82,7 +86,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UI"]
+[node name="Tween" type="Tween" parent="UI"]
+
+[node name="Timer" type="Timer" parent="UI"]
+wait_time = 2.0
+one_shot = true
+
+[node name="SPLASH" type="Sprite" parent="UI"]
+position = Vector2( 778.336, 337.001 )
+scale = Vector2( 0.276625, 0.277259 )
+texture = ExtResource( 26 )
+
+[node name="START" type="Sprite" parent="UI/SPLASH"]
+position = Vector2( 375.96, -634.786 )
+scale = Vector2( 3, 2 )
+texture = ExtResource( 27 )
+
+[node name="PausedLabel" type="Label" parent="UI"]
 visible = false
 modulate = Color( 1, 1, 1, 0.705882 )
 margin_left = 560.856
@@ -154,6 +174,12 @@ __meta__ = {
 position = Vector2( 424.421, 298.321 )
 frames = SubResource( 1 )
 frame = 4
+
+[node name="UI_Control" type="Sprite" parent="UI"]
+position = Vector2( 314.336, 81.0012 )
+rotation = 0.226893
+scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 29 )
 
 [node name="UI_REWINDER" type="AnimatedSprite" parent="UI"]
 position = Vector2( 194.178, 361.378 )
@@ -233,6 +259,12 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="UI/Gun"]
+
+[node name="UI_REWIND" type="Sprite" parent="UI"]
+position = Vector2( 298.336, 441.001 )
+rotation = 0.226893
+scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 28 )
 
 [node name="MockupImage" type="TextureRect" parent="."]
 visible = false

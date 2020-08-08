@@ -2,6 +2,9 @@ extends Node
 
 signal tape_pickuped(tape_type)
 signal mouse_pos(mouse_pos)
+signal next_level(level_name)
+
+var scene_idx = 1
 
 
 func _ready() -> void:
@@ -20,7 +23,7 @@ func _ready() -> void:
 	$Player.connect("rewind_stopped", get_node("/root/Control/UI"), "_stop_rewind")
 	$Player.connect("damage_taken", get_node("/root/Control/UI"), "_took_damage")
 	self.connect("mouse_pos", $Player, "mouse_pos")
-	
+
 	if !$Player.current_gun:
 		emit_signal("tape_pickuped", load("res://src/scripts/entities/VHS/VHS-Pistol.gd").new())
 
@@ -51,3 +54,7 @@ func eject_tape(tape_type) -> void:
 		self.connect("tape_pickuped", $Player, "tape_pickuped")
 
 		get_node("Tapes").add_child(node_to_load)
+
+
+func _on_exit(body: Node) -> void:
+	emit_signal("next_level", "Scene1")

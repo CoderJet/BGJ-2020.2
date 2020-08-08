@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/scenes/WorldEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/tilesets/MasterTileset.tres" type="TileSet" id=2]
@@ -13,11 +13,29 @@
 [ext_resource path="res://src/scenes/entities/VHS/VHS_Item.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/textures/obstacles/Decal_SALE.png" type="Texture" id=12]
 [ext_resource path="res://src/scenes/obstacles/NeonSignProjected.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/scenes/obstacles/DeskComputer.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/textures/obstacles/Decal_Thriller.png" type="Texture" id=15]
+[ext_resource path="res://assets/textures/obstacles/Decal_Comedy.png" type="Texture" id=16]
+[ext_resource path="res://assets/textures/obstacles/Decal_Western.png" type="Texture" id=17]
+[ext_resource path="res://assets/textures/obstacles/Decal_Mystery.png" type="Texture" id=18]
+[ext_resource path="res://assets/textures/obstacles/Decal_Action.png" type="Texture" id=19]
+[ext_resource path="res://assets/textures/obstacles/Decal_Fantasy.png" type="Texture" id=20]
+[ext_resource path="res://assets/textures/obstacles/Decal_Horror.png" type="Texture" id=21]
+[ext_resource path="res://assets/textures/obstacles/Decal_Romance.png" type="Texture" id=22]
+[ext_resource path="res://assets/textures/obstacles/Decal_Drama.png" type="Texture" id=23]
+[ext_resource path="res://assets/textures/Exit.png" type="Texture" id=24]
+[ext_resource path="res://src/scenes/Enemies/EnemyPistol.tscn" type="PackedScene" id=25]
+[ext_resource path="res://src/scenes/Enemies/EnemySMG.tscn" type="PackedScene" id=26]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2011.42, 238.099 )
 
 [node name="VHS Store" type="Node"]
 script = ExtResource( 5 )
 
 [node name="WorldEnvironment" parent="." instance=ExtResource( 1 )]
+
+[node name="Background" type="Node" parent="."]
 
 [node name="Terrain" type="Node" parent="."]
 
@@ -83,6 +101,64 @@ rotation = 3.14159
 
 [node name="ShelvingUnit3" parent="Environment" instance=ExtResource( 10 )]
 position = Vector2( 2834.03, 6500.69 )
+
+[node name="DeskComputer" parent="Environment" instance=ExtResource( 14 )]
+position = Vector2( -2915.13, 4356.6 )
+rotation = -0.504117
+
+[node name="Decal_Action" type="Sprite" parent="Environment"]
+position = Vector2( 1500, 2000 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 19 )
+
+[node name="Decal_Comedy" type="Sprite" parent="Environment"]
+position = Vector2( 2500, 2000 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 16 )
+
+[node name="Decal_Drama" type="Sprite" parent="Environment"]
+position = Vector2( 4000, 2000 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 23 )
+
+[node name="Decal_Fantasy" type="Sprite" parent="Environment"]
+position = Vector2( 5000, 2000 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 20 )
+
+[node name="Decal_Horror" type="Sprite" parent="Environment"]
+position = Vector2( 6500, 2000 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 21 )
+
+[node name="Decal_Mystery" type="Sprite" parent="Environment"]
+position = Vector2( 6262, 6500.69 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 18 )
+
+[node name="Decal_Romance" type="Sprite" parent="Environment"]
+position = Vector2( 5000, 6500 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 22 )
+
+[node name="Decal_Thriller" type="Sprite" parent="Environment"]
+position = Vector2( 4000, 6500 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
+
+[node name="Decal_Western" type="Sprite" parent="Environment"]
+position = Vector2( 500, 2000 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 17 )
 
 [node name="Shelves" type="Node" parent="Environment"]
 
@@ -414,21 +490,28 @@ rotation = 2.60315
 [node name="CardboardBoxOpen2" parent="Environment/Boxes" instance=ExtResource( 8 )]
 position = Vector2( 972.638, 1956.01 )
 
+[node name="Exit" type="Sprite" parent="Environment"]
+visible = false
+position = Vector2( 9500, 4500 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+texture = ExtResource( 24 )
+
+[node name="Area2D" type="Area2D" parent="Environment/Exit"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Exit/Area2D"]
+position = Vector2( -255.633, 127.816 )
+shape = SubResource( 1 )
+
 [node name="Tapes" type="Node" parent="."]
 
 [node name="SMG" parent="Tapes" instance=ExtResource( 11 )]
-position = Vector2( 7711.61, 4557.36 )
+position = Vector2( -1314.91, 6363.09 )
 continuous_cd = 2
 can_sleep = false
 tape_type = 1
 
 [node name="Particles" type="Node" parent="."]
-
-[node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( -2408.33, 4009.39 )
-rotation = -3.13995
-z_index = 1
-collision_mask = 6
 
 [node name="Lights" type="Node" parent="."]
 
@@ -437,3 +520,61 @@ position = Vector2( 7318, 3500 )
 
 [node name="NeonSignProjected2" parent="Lights" instance=ExtResource( 13 )]
 position = Vector2( 7321, 5500 )
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource( 25 )]
+position = Vector2( -2133.17, 6867.38 )
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource( 25 )]
+position = Vector2( 1398.49, 3271.62 )
+rotation = -2.04797
+
+[node name="Enemy8" parent="Enemies" instance=ExtResource( 25 )]
+position = Vector2( -271.222, 7492.52 )
+rotation = -2.04797
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource( 26 )]
+position = Vector2( 2576.61, 2203.68 )
+polygon_path = NodePath("Polygon2D")
+
+[node name="Polygon2D" type="Polygon2D" parent="Enemies/Enemy3"]
+color = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 15.3796, -1864.42, 1285.94, -1852.43, 1267.96, 1503.78, -218.356, 1437.85 )
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource( 26 )]
+position = Vector2( 9365.65, 881.473 )
+polygon_path = NodePath("Polygon2D2")
+
+[node name="Polygon2D2" type="Polygon2D" parent="Enemies/Enemy4"]
+position = Vector2( -1904.08, 1331.19 )
+color = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( -127.354, -1975.98, 2207.37, -1571.89, 2135.53, 5405.33, -163.273, 5414.31 )
+
+[node name="Enemy5" parent="Enemies" instance=ExtResource( 26 )]
+position = Vector2( 7433.19, 7484.05 )
+polygon_path = NodePath("Polygon2D3")
+
+[node name="Polygon2D3" type="Polygon2D" parent="Enemies/Enemy5"]
+position = Vector2( 28.3789, -5271.38 )
+color = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( -127.354, -1975.98, 2207.37, -1571.89, 2135.53, 5405.33, -163.273, 5414.31 )
+
+[node name="Enemy6" parent="Enemies" instance=ExtResource( 26 )]
+position = Vector2( 6322.88, 1661.24 )
+rotation = 2.92666
+
+[node name="Enemy7" parent="Enemies" instance=ExtResource( 26 )]
+position = Vector2( 5034.57, 6678.85 )
+rotation = 2.92666
+polygon_path = NodePath("Polygon2D3")
+
+[node name="Polygon2D3" type="Polygon2D" parent="Enemies/Enemy7"]
+position = Vector2( 1906.62, 980.256 )
+rotation = -2.92666
+color = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( -720.013, -961.271, 2063.69, -871.474, 2270.23, 1606.92, -899.607, 1705.7 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( -2571.8, 3538.02 )
+[connection signal="body_entered" from="Environment/Exit/Area2D" to="." method="_on_exit"]

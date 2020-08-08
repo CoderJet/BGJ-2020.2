@@ -13,7 +13,7 @@ func _ready():
 func _start_rewind():
 	$ScanLineEffect.material.set_shader_param("lines", true)
 	$UI_REWINDER.frame = 3
-	
+
 func _stop_rewind():
 	$ScanLineEffect.material.set_shader_param("lines", false)
 	$UI_REWINDER.frame = 2
