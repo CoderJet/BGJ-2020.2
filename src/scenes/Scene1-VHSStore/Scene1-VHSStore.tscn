@@ -424,7 +424,4 @@ tape_type = 1
 [node name="Particles" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 8705.04, 4631.06 )
-rotation = -3.13995
-z_index = 1
-collision_mask = 6
+position = Vector2( -2408.33, 4009.39 )

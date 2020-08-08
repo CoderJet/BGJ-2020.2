@@ -15,14 +15,17 @@ func _ready() -> void:
 
 export(float) var gun_distance = 2000
 export(float) var shoot_recoil_time = 1.0
+export(float) var shoot_cooldown_time = 1.0
+export(int) var num_shots_per_cooldown = 1
 export(float) var walk_speed = 2000
 export(float) var hit_chance = 0.8
 export(int) var damage = 1
 
 var wait_time = 5
 var next_time = 0
+onready var cur_shots = num_shots_per_cooldown
+var cur_shots_cooldown_time = 0
 
-var shoot_time = 1.0
 var next_time_shoot = 0
 ## State machine logic
 func _state_logic(delta : float) -> void:
@@ -44,18 +47,25 @@ func _state_logic(delta : float) -> void:
 		#parent.rotation = lerp(parent.rotation, PI + parent.position.angle_to_point(player.position), delta)
 		#parent.interpolate_property(parent.rotation)
 		Globals.SmoothLookAt(parent, player.position, 0.4)
-
-		if next_time_shoot <= 0:
-			if (parent.position.distance_to(player.position)) > gun_distance:
-				state = states.chasing
-				return
-			
-			next_time_shoot = shoot_time
-			parent.set_flash()
-			var other = parent._hit_scan()
-			if other and other.has_method("is_player"):
-				other.take_damage(damage)
-				pass
+		
+		if cur_shots > 0:
+			if next_time_shoot <= 0:
+				cur_shots -= 1
+				if (parent.position.distance_to(player.position)) > gun_distance:
+					state = states.chasing
+					return
+				
+				next_time_shoot = shoot_recoil_time
+				parent.set_flash(player.position)
+				var other = parent._hit_scan()
+				if other and other.has_method("is_player"):
+					other.take_damage(damage)
+					pass
+			else:
+				next_time_shoot -= delta
+		elif next_time_shoot <= 0:
+			cur_shots = num_shots_per_cooldown
+			next_time_shoot = shoot_cooldown_time
 		else:
 			next_time_shoot -= delta
 

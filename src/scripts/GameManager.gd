@@ -20,6 +20,9 @@ func _ready() -> void:
 	$Player.connect("rewind_stopped", get_node("/root/Control/UI"), "_stop_rewind")
 	$Player.connect("damage_taken", get_node("/root/Control/UI"), "_took_damage")
 	self.connect("mouse_pos", $Player, "mouse_pos")
+	
+	if !$Player.current_gun:
+		emit_signal("tape_pickuped", load("res://src/scripts/entities/VHS/VHS-Pistol.gd").new())
 
 	for child in get_node("Tapes").get_children():
 		if child is VHS_Item:

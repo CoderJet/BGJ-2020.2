@@ -37,11 +37,6 @@ animations = [ {
 "name": "idle",
 "speed": 30.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "gunning",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "gunless",
@@ -51,13 +46,18 @@ animations = [ {
 "loop": true,
 "name": "dodging",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "gunning",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 124.193
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 0
+collision_mask = 6
 script = ExtResource( 2 )
 speed = 2500.0
 max_health = 5
@@ -117,7 +117,7 @@ rotation = -1.5708
 z_index = 10
 points = PoolVector2Array( 0, 0, 0, 100 )
 width = 5.0
-default_color = Color( 0.988281, 0.988281, 0.860886, 1 )
+default_color = Color( 0.988235, 0.988235, 0.862745, 1 )
 
 [node name="RenderEffects" type="Node" parent="Body"]
 
